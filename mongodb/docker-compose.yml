@@ -1,11 +1,13 @@
 version: '3.3'
 # created from https://neo4j.com/developer/docker-run-neo4j/
 services:
+  # configdb only required if instance is config server for sharded cluster
   mongo01:
     image: mongo:latest
     container_name: mongo01
     volumes:
       - mongo_db_1:/data/db
+      - mongo_config_1:/data/configdb
     ports:
       - 27017:27017
     networks:
@@ -27,6 +29,8 @@ services:
 
 volumes:
   mongo_db_1:
+    driver: local
+  mongo_config_1:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>
