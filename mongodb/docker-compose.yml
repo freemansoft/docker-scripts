@@ -1,0 +1,35 @@
+version: '3.3'
+# created from https://neo4j.com/developer/docker-run-neo4j/
+services:
+  mongo01:
+    image: mongo:latest
+    container_name: mongo01
+    volumes:
+      - mongo_db_1:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - mongo_net
+
+  mongoexp:
+    image: mongo-express:latest
+    container_name: mongoexp01
+    ports:
+      - "8081:8081"
+    links:
+      - mongo01
+    environment:
+      - ME_CONFIG_OPTIONS_EDITORTHEME=ambiance
+      - ME_CONFIG_MONGODB_SERVER=mongo01
+      - ME_CONFIG_MONGODB_PORT=27017
+    networks:
+      - mongo_net
+
+volumes:
+  mongo_db_1:
+    driver: local
+
+# the actual name will be <directory_name>_<network_name>
+networks:
+  mongo_net:
+    driver: bridge

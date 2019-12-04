@@ -5,3 +5,4 @@ Simple compose scripts to bring up various open source or 3rd party on local doc
 | Elasticsearch | Elastic.co with Kibana          | ??                         |
 | Kafka         | Confluent.io Kafka CE with KSQL | 8GB                        |
 | neo4j         | Neo4j.com                       | ??                         |
+| mongodb       | Mongo with Mongo Express        | ??                         |
