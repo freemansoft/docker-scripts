@@ -3,8 +3,9 @@ Manage 9 Kafka services with all CE parts in docker on local machines.
 * Community without UI https://docs.confluent.io/current/quickstart/cos-docker-quickstart.html
 
 **Features**
+* Creates named volumes to persist across restarts.  You have to remove the named volume to restore to original
 * The Kafka / Confluent web UI is on http://localhost:9021/
-* Recommends 8gb
+* Recommends allocating 8GB of memory to Docker
 
 **Usage**
 | command  | Purpose  |

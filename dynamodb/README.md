@@ -1,9 +1,10 @@
-Manage three node Elasticsearch + Kibana in docker on local machines. 
-* Guide https://www.elastic.co/guide/en/elastic-stack-get-started/master/get-started-docker.html
+Manage single node Neo4J in docker on local machines. 
+* Guide https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html
 
 **Features**
 * Creates named volumes to persist across restarts.  You have to remove the named volume to restore to original
-* The Kiban web UI is on http://localhost/5601
+* DynamoDB is available on --endpoint-url http://localhost:8000
+* The DynamoDB shell UI is on http://localhost:8000/shell/ 
 
 **Usage**
 | command  | Purpose  |
@@ -13,4 +14,4 @@ Manage three node Elasticsearch + Kibana in docker on local machines.
 | docker-compose down           | bring down services  | 
 
 **Purpose**
-Exists as docker compose to make multi-node easier .
+Exists as docker compose to make multi-node easier in future.
