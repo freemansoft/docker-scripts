@@ -5,7 +5,7 @@ services:
     image: amazon/dynamodb-local:latest
     container_name: dynamodb1
     volumes:
-      # on the Mac, named volumes mount as root unless mouted over the top of an existing volume
+      # on the PC, named volumes mount as root unless mouted over the top of an existing volume
       - dynamodb_data_1:/home/dynamodblocal
     ports:
       - 8000:8000
