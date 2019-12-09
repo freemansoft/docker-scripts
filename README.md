@@ -1,13 +1,14 @@
 Simple compose scripts to bring up various open source or 3rd party on local docker.
 
 # Available Containers/Images
-| Product       | Distribution                    | Docker Memory Requirements |
-|---------------|---------------------------------|----------------------------|
-| [DynamoDB](dynamodb/README.md)            | dyanmodb-local with web shell   | ??                         |
-| [Elasticsearch](elasticsearch/README.md)  | Elastic.co with Kibana          | ??                         |
-| [Kafka](kafka-confluent/README.md)        | Confluent.io Kafka CE with KSQL | 8GB                        |
-| [mongodb](mongodb/README.md)              | Mongo with Mongo Express        | ??                         |
-| [neo4j](neo4j/README.md)                  | Neo4j.com                       | ??                         |
+| Product       | Distribution                    | GUI container | Memory Requirements |
+|---------------|---------------------------------|---------------|----------------------------|
+| [DynamoDB](dynamodb/README.md)            | dyanmodb-local       | with web shell     | ??   |
+| [Elasticsearch](elasticsearch/README.md)  | Elastic.co           | Kibana             | ??   |
+| [Kafka](kafka-confluent/README.md)        | Confluent.io CE with | KSQL Confluent GUI | 8GB  |
+| [mongodb](mongodb/README.md)              | Mongo                | Mongo Express      | ??   |
+| [neo4j](neo4j/README.md)                  | Neo4j.com            | built in console   | ??   |
+| [redis](https://redis.io/)                | Redis                | Redis-Commander    | ??   |
 
 # Using Docker
 Open a command prompt.  Change pwd to the docker container set you want to run and execute one of the following commands.
