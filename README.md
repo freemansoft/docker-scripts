@@ -3,6 +3,7 @@ Simple compose scripts to bring up various open source or 3rd party on local doc
 # Available Containers/Images
 | Product                                  | Distribution         | GUI container      | Memory Required |
 |------------------------------------------|----------------------|--------------------|-----------------|
+| [Anaconda](anaconda/README.md)           | continuum.io         | Jupyter notebook   | ??   |
 | [DynamoDB](dynamodb/README.md)           | dyanmodb-local       | with web shell     | ??   |
 | [Elasticsearch](elasticsearch/README.md) | Elastic.co           | Kibana             | ??   |
 | [Kafka](kafka-confluent/README.md)       | Confluent.io CE with | KSQL Confluent GUI | 8GB  |

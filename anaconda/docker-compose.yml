@@ -1,0 +1,25 @@
+version: '3.3'
+# created from https://hub.docker.com/r/continuumio/anaconda3
+services:
+  dynamodb1:
+    image: continuumio/anaconda3:latest
+    container_name: anaconda3
+    volumes:
+      - anaconda_data_1:/opt/notebooks
+    ports:
+      - 8888:8888
+    # note: distribution runs as root which is frowned upon
+    # note: bash is in /bin instead of /usr/bin as of 2019/12
+    #entrypoint: ["/usr/bin/bash" ,"-c", "/opt/conda/bin/conda install jupyter -y --quiet && mkdir /opt/notebooks && /opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --allow-root --no-browser"]
+    entrypoint: ["/bin/bash" ,"-c", "/opt/conda/bin/conda install jupyter -y --quiet && /opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --allow-root --no-browser"]
+    networks:
+      - anaconda_net
+
+volumes:
+  anaconda_data_1:
+    driver: local
+
+# the actual name will be <directory_name>_<network_name>
+networks:
+  anaconda_net:
+    driver: bridge
