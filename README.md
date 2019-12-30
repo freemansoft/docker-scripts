@@ -10,6 +10,7 @@ Simple compose scripts to bring up various open source or 3rd party on local doc
 | [mongodb](mongodb/README.md)             | Mongo                | Mongo Express      | ??   |
 | [neo4j](neo4j/README.md)                 | Neo4j.com            | built in console   | ??   |
 | [redis](https://redis.io/)               | Redis                | Redis-Commander    | ??   |
+| [Tensorflow](tensforflow/README.md)      | tensorflow.org       | w/Jupyter notebook | ??   |
 
 # Using Docker
 Open a command prompt.  Change pwd to the docker container set you want to run and execute one of the following commands.
@@ -27,3 +28,11 @@ Open a command prompt.  Change pwd to the docker container set you want to run a
 | `docker stats`              | show memory and other usage  |
 | `docker volume ls`          | list persistent volumes      |
 | `docker volume rm <volume>` | remove the persistent volume |
+
+## open command line prompt on the VM hosting docker
+Windows and Mac Docker desktop runs in a VM.  The named volumes are inside that VM. You can look at the named volumes in the MobyLinux VM that hosts the docker containers with teh following steps. 
+* `docker container run --rm -it -v /:/host alpine`
+* `chroot /host`
+* `ls /var/lib/docker/volumes/`
+
+From [docker tips blog](https://nickjanetakis.com/blog/docker-tip-70-gain-access-to-the-mobylinux-vm-on-windows-or-macos). Works for Windows and Mac.
