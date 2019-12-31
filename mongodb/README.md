@@ -7,11 +7,11 @@
 * Creates named volumes to persist across restarts.  You have to remove the named volume to restore to original
 * The Mongo Express web UI is on http://localhost:8081
 * The Mongo db connection string is mongodb://localhost:27017
-* Open mongdb command prompt with `docker exec -it mongo01 mongo`
+* Open mongdb command prompt with `docker exec -it mongo mongo`
     * This may not work from a GitHub Bash prompt on Windows
 
 # Docker Management
-See README.md in the [root of this repo](../README.md)
+See README.md in the [root of this repo](../README.md) for interesting docker commands.
 
-# IDE Extension Recommendations
-* VSCode users can explore local Dynamo DB instances with their [Azure Cosmos DB extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-cosmosdb)
+# Docker Management
+VSCode users can explore local Dynamo DB instances with their [Azure Cosmos DB extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-cosmosdb)

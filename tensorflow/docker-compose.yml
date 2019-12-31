@@ -1,11 +1,12 @@
 version: '3.3'
 # created from https://hub.docker.com/r/tensorflow/tensorflow/
 services:
-  dynamodb1:
+  tensorflow:
     image: tensorflow/tensorflow:latest-py3-jupyter
     container_name: tensorflow-py3-jupyter
     volumes:
-      - tensorflow_data_1:/tf/notebooks
+      - data:/tf/notebooks
+      #- ${HOME}:/tf/home
     ports:
       - 8888:8888
     # note: distribution runs as root which is frowned upon
@@ -13,13 +14,14 @@ services:
     #entrypoint: ["/usr/bin/bash" ,"-c", "/opt/conda/bin/conda install jupyter -y --quiet && mkdir /opt/notebooks && /opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --allow-root --no-browser"]
     #entrypoint: ["/bin/bash" ,"-c", "/opt/conda/bin/conda install jupyter -y --quiet && /opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --allow-root --no-browser"]
     networks:
-      - tensorflow_net
+      - private_net
 
 volumes:
-  tensorflow_data_1:
+  # will be <service_name>_data_1
+  data:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>
 networks:
-  tensorflow_net:
+  private_net:
     driver: bridge

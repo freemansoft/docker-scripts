@@ -13,5 +13,5 @@
 # Docker Management
 See README.md in the [root of this repo](../README.md)
 
-# IDE Extension Recommendations
-None at this time
+# IDE Integration
+No IDE integrations specific to this project are called out at this time.

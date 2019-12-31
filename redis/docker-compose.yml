@@ -2,13 +2,13 @@ version: '3.3'
 # created from https://hub.docker.com/r/rediscommander/redis-commander
 services:
   redis:
-    container_name: redis01
-    hostname: redis01
+    container_name: redis
+    hostname: redis
     image: redis
     ports:
       - 6379:6379
     networks:
-      - redis_net
+      - private_net
 
   redis-commander:
     container_name: redis-commander
@@ -16,14 +16,14 @@ services:
     image: rediscommander/redis-commander:latest
     restart: always
     environment:
-      - REDIS_HOSTS=local:redis01:6379
+      - REDIS_HOSTS=local:redis:6379
     ports:
       # this is an unfortunate port choice
       - "8081:8081"
     networks:
-      - redis_net
+      - private_net
 
 # the actual name will be <directory_name>_<network_name>
 networks:
-  redis_net:
+  private_net:
     driver: bridge

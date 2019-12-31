@@ -1,12 +1,12 @@
 version: '3.3'
 # created from https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.UsageNotes.html
 services:
-  dynamodb1:
+  dynamodb:
     image: amazon/dynamodb-local:latest
-    container_name: dynamodb1
+    container_name: dynamodb
     volumes:
       # on the PC, named volumes mount as root unless mouted over the top of an existing volume
-      - dynamodb_data_1:/home/dynamodblocal
+      - data:/home/dynamodblocal
     ports:
       - 8000:8000
     entrypoint: ["/usr/bin/java", "-Djava.library.path=.", "-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodblocal"]
@@ -15,13 +15,14 @@ services:
     # used to understand that the mac mounts named volumes as root while the amazon container runs dynamodb as dynamodblocal
     # entrypoint: ["/usr/bin/bash" ,"-c", "ls -l /home; ls -l /home/dynamodblocal*"]
     networks:
-      - dynamodb_net
+      - private_net
 
 volumes:
-  dynamodb_data_1:
+  # will be <dir_name>_data
+  data:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>
 networks:
-  dynamodb_net:
+  private_net:
     driver: bridge

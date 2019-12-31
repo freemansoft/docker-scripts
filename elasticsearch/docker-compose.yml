@@ -20,7 +20,7 @@ services:
     ports:
       - 9200:9200
     networks:
-      - elastic_net
+      - private_net
 
   es02:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
@@ -41,7 +41,7 @@ services:
     ports:
       - 9201:9201
     networks:
-      - elastic_net
+      - private_net
 
   es03:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.2
@@ -62,7 +62,7 @@ services:
     ports:
       - 9202:9202
     networks:
-      - elastic_net
+      - private_net
 
   kib01:
     image: docker.elastic.co/kibana/kibana:7.4.2
@@ -73,9 +73,10 @@ services:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: http://es01:9200
     networks:
-      - elastic_net
+      - private_net
 
 volumes:
+  # will be <svc_name>_data01
   data01:
     driver: local
   data02:
@@ -85,5 +86,5 @@ volumes:
 
 # the actual name will be <directory_name>_<network_name>
 networks:
-  elastic_net:
+  private_net:
     driver: bridge

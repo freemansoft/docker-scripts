@@ -1,34 +1,35 @@
 version: '3.3'
 # created from https://neo4j.com/developer/docker-run-neo4j/
 services:
-  neo4j1:
+  neo4j:
     image: neo4j:latest
-    container_name: neo4j1
+    container_name: neo4j
     environment:
       - NEO4J_AUTH=neo4j/test
     volumes:
-      - neo4j_data_1:/data
-      - neo4j_logs_1:/logs
-      - neo4j_import_1:/var/lib/neo4j/import
-      - neo4j_plugins_1:/plugins
+      - data:/data
+      - logs:/logs
+      - import:/var/lib/neo4j/import
+      - plugins:/plugins
     ports:
       - 7474:7474
       - 7473:7473
       - 7687:7687
     networks:
-      - neo4j_net
+      - private_net
 
 volumes:
-  neo4j_data_1:
+  # will be <service_name>_data
+  data:
     driver: local
-  neo4j_logs_1:
+  logs:
     driver: local
-  neo4j_import_1:
+  import:
     driver: local
-  neo4j_plugins_1:
+  plugins:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>
 networks:
-  neo4j_net:
+  private_net:
     driver: bridge

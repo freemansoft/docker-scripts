@@ -5,10 +5,10 @@
 
 # Features
 * Creates named volumes to persist across restarts.  You have to remove the named volume to restore to original
-* Kibana web UI is on http://localhost/5601
+* Kibana web UI is on http://localhost:5601
 
 # Docker Management
-See README.md in the [root of this repo](../README.md)
+See README.md in the [root of this repo](../README.md) for interesting docker commands.
 
-# IDE Extension Recommendations
-None at this time
+# IDE Integration
+No IDE integrations specific to this project are called out at this time.
