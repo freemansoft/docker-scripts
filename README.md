@@ -29,7 +29,7 @@ Open a command prompt.  Change pwd to the docker container directiory in this re
 | `docker volume ls`          | list persistent volumes      |
 | `docker volume rm <volume>` | remove the persistent volume |
 
-## How to: open command line prompt on the VM hosting docker
+# Opening a command line prompt on the VM hosting docker
 Windows and Mac Docker desktop runs in a VM.  The named volumes are inside that VM. You can look at the named volumes in the MobyLinux VM that hosts the docker containers with teh following steps. 
 * `docker container run --rm -it -v /:/host alpine`
 * `chroot /host`
@@ -37,5 +37,16 @@ Windows and Mac Docker desktop runs in a VM.  The named volumes are inside that 
 
 This from [docker tips blog](https://nickjanetakis.com/blog/docker-tip-70-gain-access-to-the-mobylinux-vm-on-windows-or-macos). Works for Windows and Mac.
 
-## IDE Integration
+# IDE Integration
+
+## Writing and deploying code for Jupyter Notebooks (anaconda) and Tensorflow
+You can share a working / devleopment directory using the file share.
+1. Enable file share for the correct drive using the _Docker --> Settings --> Shared Drive_ panel
+1. Look in the docker-compose.yml files
+    1. Uncomment the home directory Volumes line in docker-compose.yml
+    1. Customize the line. Add any subdirectory path to the just un-commented Volumes entryf
+1. Start the container
+1. Open the IDE to the home directory you put in the docker-compose.yml file.
+
+## Docker Management
 The Docker plugin for Visual Studio Code supports opening a shell into the container from the docker control pane.

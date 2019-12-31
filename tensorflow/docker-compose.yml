@@ -9,10 +9,6 @@ services:
       #- ${HOME}:/tf/home
     ports:
       - 8888:8888
-    # note: distribution runs as root which is frowned upon
-    # note: bash is in /bin instead of /usr/bin as of 2019/12
-    #entrypoint: ["/usr/bin/bash" ,"-c", "/opt/conda/bin/conda install jupyter -y --quiet && mkdir /opt/notebooks && /opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --allow-root --no-browser"]
-    #entrypoint: ["/bin/bash" ,"-c", "/opt/conda/bin/conda install jupyter -y --quiet && /opt/conda/bin/jupyter notebook --notebook-dir=/opt/notebooks --ip='*' --port=8888 --allow-root --no-browser"]
     networks:
       - private_net
 
