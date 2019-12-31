@@ -34,19 +34,22 @@ Windows and Mac Docker desktop runs in a VM.  The named volumes are inside that 
 * `docker container run --rm -it -v /:/host alpine`
 * `chroot /host`
 * `ls /var/lib/docker/volumes/`
-
 This from [docker tips blog](https://nickjanetakis.com/blog/docker-tip-70-gain-access-to-the-mobylinux-vm-on-windows-or-macos). Works for Windows and Mac.
 
 # IDE Integration
 
 ## Writing and deploying code for Jupyter Notebooks (anaconda) and Tensorflow
-You can share a working / devleopment directory using the file share.
+You can share a working / development directory using the file share.
 1. Enable file share for the correct drive using the _Docker --> Settings --> Shared Drive_ panel
 1. Look in the docker-compose.yml files
     1. Uncomment the home directory Volumes line in docker-compose.yml
     1. Customize the line. Add any subdirectory path to the just un-commented Volumes entryf
-1. Start the container
-1. Open the IDE to the home directory you put in the docker-compose.yml file.
+1. Start the container using `docker-compose`
+1. Open the IDE to a directory inside the directory you put in the docker-compose.yml file.
+From [Docker container tips](https://code.visualstudio.com/docs/remote/troubleshooting#_container-tips)
 
 ## Docker Management
+The Docker plugin for Visual Studio Code supports container, volume and network management
+
+## Shell prompts in a docker container
 The Docker plugin for Visual Studio Code supports opening a shell into the container from the docker control pane.
