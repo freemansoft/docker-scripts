@@ -6,7 +6,8 @@ services:
     container_name: anaconda3
     volumes:
       - data:/opt/notebooks
-      #- ${HOME}:/opt/notebooks/home
+      # comment this out if you don't want to mount GitHub inside container
+      - ${HOME}/Documents/GitHub:/opt/notebooks/GitHub
     ports:
       - 8888:8888
     # note: distribution runs as root which is frowned upon

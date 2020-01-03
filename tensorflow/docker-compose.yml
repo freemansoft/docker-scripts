@@ -6,7 +6,8 @@ services:
     container_name: tensorflow-py3-jupyter
     volumes:
       - data:/tf/notebooks
-      #- ${HOME}:/tf/home
+      # comment this out if you don't want to mount GitHub inside container
+      - ${HOME}/Documents/GitHub:/tf/GitHub
     ports:
       - 8888:8888
     networks:
