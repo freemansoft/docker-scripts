@@ -1,0 +1,18 @@
+version: '3.2'
+# lifted from https://portainer.readthedocs.io/en/latest/deployment.html
+services:
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    ports:
+      - 9000:9000
+    # don't need to expose the edge agent port when running only locally
+    #  - 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  portainer_data:

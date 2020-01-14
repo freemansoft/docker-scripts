@@ -8,6 +8,7 @@ Simple compose scripts to bring up various open source or 3rd party on local doc
 | [Elasticsearch](elasticsearch/README.md) | Elastic.co           | Kibana             | ??   | -none- |
 | [Kafka](kafka-confluent/README.md)       | Confluent.io CE with | KSQL Confluent GUI | 8GB  | -none- |
 | [mongodb](mongodb/README.md)             | Mongo                | Mongo Express      | ??   | -none- |
+| [portainer](portainer/README.md)         | Portainer.io         | Portainer UI       | ??   | -none- |
 | [neo4j](neo4j/README.md)                 | Neo4j.com            | built in console   | ??   | -none- |
 | [redis](https://redis.io/)               | Redis                | Redis-Commander    | ??   | -none- |
 | [Tensorflow](tensforflow/README.md)      | tensorflow.org       | w/Jupyter notebook | ??   | ~/Documents/GitHub |
