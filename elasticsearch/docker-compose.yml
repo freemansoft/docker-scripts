@@ -16,7 +16,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - data01:/usr/share/elasticsearch/data
+      - es01_data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
     networks:
@@ -37,7 +37,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - data02:/usr/share/elasticsearch/data
+      - es02_data:/usr/share/elasticsearch/data
     ports:
       - 9201:9201
     networks:
@@ -58,7 +58,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - data03:/usr/share/elasticsearch/data
+      - es03_data:/usr/share/elasticsearch/data
     ports:
       - 9202:9202
     networks:
@@ -77,11 +77,11 @@ services:
 
 volumes:
   # will be <svc_name>_data01
-  data01:
+  es01_data:
     driver: local
-  data02:
+  es02_data:
     driver: local
-  data03:
+  es03_data:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>

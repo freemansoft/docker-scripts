@@ -5,7 +5,7 @@ services:
     image: continuumio/anaconda3:latest
     container_name: anaconda3
     volumes:
-      - data:/opt/notebooks
+      - anaconda_data:/opt/notebooks
       # comment this out if you don't want to mount GitHub inside container
       - ${HOME}/Documents/GitHub:/opt/notebooks/GitHub
     ports:
@@ -19,7 +19,7 @@ services:
 
 volumes:
   # will be <dir_name>_data
-  data:
+  anaconda_data:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>

@@ -7,10 +7,10 @@ services:
     environment:
       - NEO4J_AUTH=neo4j/test
     volumes:
-      - data:/data
-      - logs:/logs
-      - import:/var/lib/neo4j/import
-      - plugins:/plugins
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
     ports:
       - 7474:7474
       - 7473:7473
@@ -20,13 +20,13 @@ services:
 
 volumes:
   # will be <service_name>_data
-  data:
+  neo4j_data:
     driver: local
-  logs:
+  neo4j_logs:
     driver: local
-  import:
+  neo4j_import:
     driver: local
-  plugins:
+  neo4j_plugins:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>

@@ -6,7 +6,7 @@ services:
     container_name: dynamodb
     volumes:
       # on the PC, named volumes mount as root unless mouted over the top of an existing volume
-      - data:/home/dynamodblocal
+      - dynamodb_data:/home/dynamodblocal
     ports:
       - 8000:8000
     entrypoint: ["/usr/bin/java", "-Djava.library.path=.", "-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodblocal"]
@@ -19,7 +19,7 @@ services:
 
 volumes:
   # will be <dir_name>_data
-  data:
+  dynamodb_data:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>

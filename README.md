@@ -25,7 +25,7 @@ Open a command prompt.  Change pwd to the docker container directiory in this re
 | `docker-compose down`                           | compose file dir |bring down service                            | 
 | `docker-compse -f <proj_dir>/<compose_yml> down`| project root     |bring down service - run from repo root       | 
 
-## docker volume related commands
+## Docker volume related commands
 | Command                   | Purpose                      |
 |---------------------------|------------------------------|
 | `docker stats`              | show memory and other usage  |
@@ -33,14 +33,16 @@ Open a command prompt.  Change pwd to the docker container directiory in this re
 | `docker volume rm <volume>` | remove the persistent volume |
 
 # Opening a command line prompt on the VM hosting docker
-Windows and Mac Docker desktop runs in a VM.  The named volumes are inside that VM. You can look at the named volumes in the MobyLinux VM that hosts the docker containers with teh following steps. 
+Windows and Mac Docker desktop runs in a VM.  The named volumes are inside that VM. You can look at the named volumes in the MobyLinux VM that hosts the docker containers with the following steps. 
 * `docker container run --rm -it -v /:/host alpine`
 * `chroot /host`
 * `ls /var/lib/docker/volumes/`
 This from [docker tips blog](https://nickjanetakis.com/blog/docker-tip-70-gain-access-to-the-mobylinux-vm-on-windows-or-macos). Works for Windows and Mac.
 
-# IDE Integration
+# Named Volumes
+You will see some _redundancy_ in the actual names of the named volumes declared in _docker-compose.yml_ files. This is because docker-compose synthesizes the actual named volumen name. Docker prepends the directory docker-compose.yml directory name to the volume names specified in the docker-compose.yml files.  This means that a named volume, `dog_data` run from inside the mongodb directory takes on the name `mongdb_dog_data`.  
 
+# IDE Integration
 ## Writing and deploying code for Jupyter Notebooks (anaconda) and Tensorflow
 You can share a working / development directory using the file share.
 1. Enable file share for the correct drive using the _Docker --> Settings --> Shared Drive_ panel

@@ -6,8 +6,8 @@ services:
     image: mongo:latest
     container_name: mongo
     volumes:
-      - db:/data/db
-      - configdb:/data/configdb
+      - mongodb_db:/data/db
+      - mongodb_configdb:/data/configdb
     ports:
       - 27017:27017
     networks:
@@ -29,10 +29,10 @@ services:
 
 volumes:
   # will be <svc_name>_db
-  db:
+  mongodb_db:
     driver: local
   # will be <svc_name>_configdb
-  configdb:
+  mongodb_configdb:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>

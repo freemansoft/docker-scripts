@@ -5,7 +5,7 @@ services:
     image: tensorflow/tensorflow:latest-py3-jupyter
     container_name: tensorflow-py3-jupyter
     volumes:
-      - data:/tf/notebooks
+      - tensorflow_data:/tf/notebooks
       # comment this out if you don't want to mount GitHub inside container
       - ${HOME}/Documents/GitHub:/tf/GitHub
     ports:
@@ -15,7 +15,7 @@ services:
 
 volumes:
   # will be <service_name>_data_1
-  data:
+  tensorflow_data:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>
