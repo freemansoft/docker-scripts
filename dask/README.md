@@ -9,7 +9,8 @@
 * The Jupyter web server is located at http://localhost:8888/
     * The url with the secret token will show up in the logs of the window you started this with
     * use `docker logs dask_notebook_1` to find the URL if detached
-* Open shell command prompt with `docker exec -it dask_notebook_1 /bin/bash`
+* The task scheduler is available on http://localhost:8787/status 
+* Open shell command prompt on the notebook server with `docker exec -it dask_notebook_1 /bin/bash`
     * This may not work from a GitHub Bash prompt on Windows
 
 # Docker Management

@@ -15,13 +15,20 @@ services:
     networks:
         - dask_net
     
-  worker:
+  worker2:
     image: daskdev/dask
-    hostname: dask-worker
+    hostname: dask-worker2
     command: ["dask-worker", "tcp://scheduler:8786"]
     networks:
         - dask_net
     
+  worker1:
+    image: daskdev/dask
+    hostname: dask-worker1
+    command: ["dask-worker", "tcp://scheduler:8786"]
+    networks:
+        - dask_net
+
   # could movdify command options to make additional working directorie s
   # https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html
   notebook:
