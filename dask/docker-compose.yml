@@ -35,12 +35,12 @@ services:
     image: daskdev/dask-notebook
     hostname: notebook
     volumes:
-      # uncomment to provide docker based persistence via Volume mounts
-      # have to mount over an existing directory jovyan owns it and can write to 
-      - dask_notebooks:/home/jovyan/notebooks
-      # comment this out if you don't want to mount GitHub inside container
-      # ** This isn't working because it is showing up as a root mount as of 2020/01 **
-      - ~/Documents/GitHub:/home/jovyan/notebooks/GitHub
+      # mac: will mount as root 
+      # pc: will mount as user jovyan
+      - dask_notebooks:/home/jovyan/notebook
+      # mac: will mount as user
+      # pc: will mount as root jovyan
+      - ~/Documents/GitHub:/home/jovyan/GitHub
     ports:
       - "8888:8888"
     environment:
