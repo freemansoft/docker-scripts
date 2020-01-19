@@ -4,7 +4,8 @@
 * Guide: tensorflow (python 3.x) https://hub.docker.com/r/tensorflow/tensorflow/
 
 # Features
-* Creates named volumes to persist across restarts.  You have to remove the named volume to restore to original
+* Mounts named volume into `/tf/notebooks` to store files across restarts
+* Mounts file share `~/Documents/GitHub` into `/tf/notebooks/GitHub`
 * The Jupyter web server is located at http://localhost:8888/
     * The url with the secret token will show up in the logs of the window you started this with
 * Open shell command prompt with `docker exec -it tensorflow-py3-jupyter /bin/bash`
