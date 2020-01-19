@@ -1,9 +1,10 @@
 Simple compose scripts to bring up various open source or 3rd party on local docker.
 
 # Available Containers/Images
-| Product                                  | Distribution         | GUI container      | Memory Required | Local Mounts |
+| Product                                  | Distribution         | GUI container      | Min Memory | Local Mounts |
 |------------------------------------------|----------------------|--------------------|-----------------|--------------|
 | [Anaconda](anaconda/README.md)           | continuum.io         | Jupyter notebook   | ??   | ~/Documents/GitHub |
+| [Dask](dask/README.md)                   | https://dask.org/    | DAsk + Jupyter k   | ??   | ~/Documents/GitHub |
 | [DynamoDB](dynamodb/README.md)           | dyanmodb-local       | with web shell     | ??   | -none- |
 | [Elasticsearch](elasticsearch/README.md) | Elastic.co           | Kibana             | ??   | -none- |
 | [Kafka](kafka-confluent/README.md)       | Confluent.io CE with | KSQL Confluent GUI | 8GB  | -none- |

@@ -1,0 +1,52 @@
+version: "3.1"
+# copied from https://github.com/dask/dask-docker/blob/master/docker-compose.yml
+# assumes images are available on docker hub
+# added named network
+# see docker logs and look for dask_notebook_1 to find the notebook url
+
+services:
+  scheduler:
+    image: daskdev/dask
+    hostname: dask-scheduler
+    ports:
+      - "8786:8786"
+      - "8787:8787"
+    command: ["dask-scheduler"]
+    networks:
+        - dask_net
+    
+  worker:
+    image: daskdev/dask
+    hostname: dask-worker
+    command: ["dask-worker", "tcp://scheduler:8786"]
+    networks:
+        - dask_net
+    
+  # could movdify command options to make additional working directorie s
+  # https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html
+  notebook:
+    image: daskdev/dask-notebook
+    hostname: notebook
+    volumes:
+      # uncomment to provide docker based persistence via Volume mounts
+      # have to mount over an existing directory jovyan owns it and can write to 
+      - dask_notebooks:/home/jovyan/notebooks
+      # comment this out if you don't want to mount GitHub inside container
+      # ** This isn't working because it is showing up as a root mount as of 2020/01 **
+      - ~/Documents/GitHub:/home/jovyan/notebooks/GitHub
+    ports:
+      - "8888:8888"
+    environment:
+      - DASK_SCHEDULER_ADDRESS="tcp://scheduler:8786"
+    networks:
+    - dask_net
+  
+volumes:
+    # will be <dir_name>_data
+    dask_notebooks:
+        driver: local
+      
+# the actual name will be <directory_name>_<network_name>
+networks:
+    dask_net:
+      driver: bridge
