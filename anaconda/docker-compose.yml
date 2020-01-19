@@ -7,7 +7,8 @@ services:
     volumes:
       - anaconda_data:/opt/notebooks
       # comment this out if you don't want to mount GitHub inside container
-      - ~/Documents/GitHub:/opt/GitHub
+      # has to be inside notebooks because /opt/notebooks is jupyter server root 2020/01
+      - ~/Documents/GitHub:/opt/notebooks/GitHub
     ports:
       - 8888:8888
     # note: distribution runs as root which is frowned upon

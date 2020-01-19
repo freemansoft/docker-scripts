@@ -7,6 +7,7 @@ services:
     volumes:
       - tensorflow_data:/tf/notebooks
       # comment this out if you don't want to mount GitHub inside container
+      # /tf is the jupyter notebook root
       - ~/Documents/GitHub:/tf/GitHub
     ports:
       - 8888:8888
