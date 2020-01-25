@@ -1,9 +1,10 @@
 # Purpose
-* Run dask multi not sample environment with Jupyter notebook server. 
+* Run dask multi node sample environment with Jupyter notebook server. 
 * User docker compose to spin up two dask nodes and notebook server.
 * Guide: is on GitHub https://github.com/dask/dask-docker
 
 ![Topology](./images_folder/dask-local-docker.svg)
+drawn with https://www.draw.io/?mode=github
 
 # Features
 * Mounts named volume into `/home/jovyan/notebooks` to store files across restarts
