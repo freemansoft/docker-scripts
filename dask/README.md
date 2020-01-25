@@ -3,6 +3,8 @@
 * User docker compose to spin up two dask nodes and notebook server.
 * Guide: is on GitHub https://github.com/dask/dask-docker
 
+![Topology](./images_folder/dask-local-docker.svg)
+
 # Features
 * Mounts named volume into `/home/jovyan/notebooks` to store files across restarts
 * Mounts file share `~/Documents/GitHub` into `/home/jovyan/notebooks/notebooks/GitHub`
