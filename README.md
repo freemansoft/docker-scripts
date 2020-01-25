@@ -1,18 +1,18 @@
 Simple compose scripts to bring up various open source or 3rd party on local docker.
 
 # Available Containers/Images
-| Product                                  | Distribution         | GUI container      | Min Memory | Local Mounts |
-|------------------------------------------|----------------------|--------------------|-----------------|--------------|
-| [Anaconda](anaconda/README.md)           | continuum.io         | Jupyter notebook   | ??   | ~/Documents/GitHub |
-| [Dask](dask/README.md)                   | https://dask.org/    | DAsk + Jupyter k   | ??   | ~/Documents/GitHub |
-| [DynamoDB](dynamodb/README.md)           | dyanmodb-local       | with web shell     | ??   | -none- |
-| [Elasticsearch](elasticsearch/README.md) | Elastic.co           | Kibana             | ??   | -none- |
-| [Kafka](kafka-confluent/README.md)       | Confluent.io CE with | KSQL Confluent GUI | 8GB  | -none- |
-| [mongodb](mongodb/README.md)             | Mongo                | Mongo Express      | ??   | -none- |
-| [portainer](portainer/README.md)         | Portainer.io         | Portainer UI       | ??   | -none- |
-| [neo4j](neo4j/README.md)                 | Neo4j.com            | built in console   | ??   | -none- |
-| [redis](https://redis.io/)               | Redis                | Redis-Commander    | ??   | -none- |
-| [Tensorflow](tensforflow/README.md)      | tensorflow.org       | w/Jupyter notebook | ??   | ~/Documents/GitHub |
+| Product                                  | Distribution             | GUI container     | Min Memory | Local Mounts |
+|------------------------------------------|--------------------------|-------------------|------------|--------------|
+| [Anaconda](anaconda/README.md)           | continuum.io             | Jupyter notebook  | ??   | ~/Documents/GitHub |
+| [Dask](dask/README.md)                   | https://dask.org/        | Dask Dashboard + Jupyter | ??   | ~/Documents/GitHub |
+| [DynamoDB](dynamodb/README.md)           | dyanmodb-local           | with web shell    | ??   | -none- |
+| [Elasticsearch](elasticsearch/README.md) | Elastic.co               | Kibana            | ??   | -none- |
+| [Kafka](kafka-confluent/README.md)       | Confluent.io CE with KSQL| Confluent GUI     | 8GB  | -none- |
+| [mongodb](mongodb/README.md)             | Mongo                    | Mongo Express     | ??   | -none- |
+| [portainer](portainer/README.md)         | Portainer.io             | Portainer UI      | ??   | -none- |
+| [neo4j](neo4j/README.md)                 | Neo4j.com                | built in console  | ??   | -none- |
+| [redis](https://redis.io/)               | Redis                    | Redis-Commander   | ??   | -none- |
+| [Tensorflow](tensforflow/README.md)      | tensorflow.org           | Jupyter notebook  | ??   | ~/Documents/GitHub |
 
 # Using Docker
 Open a command prompt.  Change pwd to the docker container directiory in this repository and execute one of the following commands.
