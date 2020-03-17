@@ -3,6 +3,9 @@
 * Exists as docker-compose to make multi-node easier .
 * Guide: https://www.elastic.co/guide/en/elastic-stack-get-started/master/get-started-docker.html
 
+![Topology](./images_folder/elasticsearch-local-docker.svg)
+drawn with https://www.draw.io/?mode=github
+
 # Features
 * Creates named volumes to persist across restarts.  You have to remove the named volume to restore to original
 * Kibana web UI is on http://localhost:5601
