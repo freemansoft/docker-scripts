@@ -1,2 +1,6 @@
 **/.ipynb_checkpoints
 .vscode
+**/fsi*
+**/azure-variables.sh
+**/*.pem
+**/*.pfx
