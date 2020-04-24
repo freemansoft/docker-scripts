@@ -1,0 +1,14 @@
+# docker pull apache/tika:latest-full
+# docker pull apache/tika:latest
+# DockerHub from https://hub.docker.com/r/apache/tika
+# Git: https://github.com/apache/tika-docker
+# Bare because not much needed and Azure Service Fabric supports only a few attributes
+version: '3.3'
+services:
+  tika:
+    # can use apache/tika:latest
+    image: apache/tika:latest
+    ports:
+      # remap to 80 for large cloud providers
+      - 80:9998/http
+

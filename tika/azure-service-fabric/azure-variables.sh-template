@@ -1,0 +1,21 @@
+# copy this file and name it azure-variables.sh
+ResourceGroupName="fsi-tika-resources" 
+ClusterName="fsi-tika" 
+Location="eastus" 
+CertificatePassword="xq6D7nN%6ck@6" 
+VaultName="fsi-tika-vault" 
+VmPassword="Mypa$$word!321"
+VmUserName="sfadminuser"
+# Put your subscrption id here - script will fail with list of valid subscriptions if not correct
+SubscriptionID="put-your-subcription-number-here"
+
+# Windows hack for git bash or other linux bash
+#shopt -s expand_aliases
+#alias az='az.cmd'
+
+# Login to Azure and set the subscription
+echo "login may get browser login panel"
+az login
+
+echo "setting subscription $SubscriptionID"
+az account set --subscription $SubscriptionID
