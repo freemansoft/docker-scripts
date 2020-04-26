@@ -1,0 +1,10 @@
+# copy this file and name it azure-variables.sh
+ResourceGroupName="fsi-tika-resources" 
+ClusterName="fsi-tika" 
+Location="eastus" 
+# Put your subscrption id here - script will fail with list of valid subscriptions if not correct
+SubscriptionID="put-your-subcription-number-here"
+
+# Windows hack for git bash or other linux bash
+#shopt -s expand_aliases
+#alias az='az.cmd'

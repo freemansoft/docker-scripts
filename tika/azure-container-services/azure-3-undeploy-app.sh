@@ -4,6 +4,7 @@
 # Variables
 source azure-variables.sh
 
-az webapp delete \
+az container delete \
+    --resource-group $ResourceGroupName \
     --name $ClusterName \
-    --resource-group $ResourceGroupName 
+    --yes

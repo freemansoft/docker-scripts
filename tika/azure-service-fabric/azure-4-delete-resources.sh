@@ -1,5 +1,5 @@
 #!/bin/bash
-#from https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-quickstart-containers-linux
+# see ../README.md
 
 # Variables
 source azure-variables.sh
