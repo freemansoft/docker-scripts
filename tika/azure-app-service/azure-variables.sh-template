@@ -2,10 +2,7 @@
 ResourceGroupName="fsi-tika-resources" 
 ClusterName="fsi-tika" 
 Location="eastus" 
-CertificatePassword="xq6D7nN%6ck@6" 
-VaultName="fsi-tika-vault" 
-VmPassword="Mypa$$word!321"
-VmUserName="sfadminuser"
+AppPlanName="fsi-tika-plan"
 # Put your subscrption id here - script will fail with list of valid subscriptions if not correct
 SubscriptionID="put-your-subcription-number-here"
 

@@ -28,16 +28,17 @@ No IDE integrations specific to this project are called out at this time.
 1. Windows Bash: If running on Windows using bash uncomment these two lines in azure-variables.sh
     1. shopt -s expand_aliases
     1. alias az='az.cmd'
+1. Run script azure-0... to log into Azure and set subscription
 ### Execute
-1. Run Numeric script #1 to create the resource group and and App Plan
-1. Run Numeric script #2 to deploy the app
+1. Run script azure-1... to create the resource group and and App Plan
+1. Run script azure-2... to deploy the app
     1. This may take 5 minutes
 ### Test
 1. Test the app  with *GET* to http://\<cluster-name>.azurewebsites.com.  The app is running on port 80
 1. You can see the configuration built by Azure in the Azure Portal for the App Service --> Settings --> Export Template
 ### Teardown
-1. Run numeric script 3 to undeploy the app
-1. Run numeric script 4 to teardown the resource group.  
+1. Run script azure-3... to undeploy the app
+1. Run script azure-4... to teardown the resource group.  
     1. This may take 5 minutes
 
 # Tika Parser jar on Azure Service Fabric
@@ -54,16 +55,17 @@ https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-quickstart-
 1. Windows Bash: If running on Windows using bash uncomment these two lines in azure-variables.sh
     1. shopt -s expand_aliases
     1. alias az='az.cmd'
+1. Run script azure-0... to log into Azure and set subscription
 ### Execute
-1. Run Numeric script #1 to create the resource group and ServiceFabric cluster. 
+1. Run script azure-1... to create the resource group and ServiceFabric cluster. 
     1. This may take 20 minutes
     1. Will start a 5 node cluster and deploy app
-1. Run Numeric script #2 to deploy the app
+1. Run script azure-2... to deploy the app
 ### Test
 1. Test the app  with *GET* to http://\<cluster-name>.\<region>.cloudapp.azure.com.  The app is running on port 80
 ### Teardown
-1. Run numeric script 3 to undeploy the app
-1. Run numeric script 4 to teardown the resource group.  
+1. Run script azure-3... to undeploy the app
+1. Run script azure-4... to teardown the resource group.  
     1. This may take 20 minutes
 
 
