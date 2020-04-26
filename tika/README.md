@@ -29,11 +29,11 @@ No IDE integrations specific to this project are called out at this time.
 
 # Azure PaaS container deployments
 This section describes simple Azure deployments for _Azure Container Service_, _Azure App Service_ and _Azure Service Fabric_.
-| |Azure Container Service |Azure App Service | Azure Service Fabric|
+|                |Azure Container Service |Azure App Service | Azure Service Fabric|
 |-|-|-|-|
 |Container       | yes | yes | yes |
 |Redirect port   | no  | no  | no  |
-|manual scale out| no  | no  | yes |
+|manual scale out| no  | yes | yes |
 |Autoscale       | no  | no  | no  |
 |Load Balancer   | no  | no  | yes |
 
