@@ -16,5 +16,6 @@ az container create \
 
 # Show the URL
 az container show --resource-group $ResourceGroupName --name $ClusterName \
-    --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
+    --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" \
+    --out table
 

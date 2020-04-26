@@ -6,6 +6,8 @@ source azure-variables.sh
 
 # Create resource group $ResourceGroupName
 echo "creating resource group $ResourceGroupName"
-az group create --name $ResourceGroupName --location $Location 
+az group create \
+    --name $ResourceGroupName \
+    --location $Location 
 
 
