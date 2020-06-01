@@ -4,14 +4,14 @@
 # Variables
 source azure-variables.sh
 
-echo "Creating container group $ClusterName "
+echo "Creating ACS container $ClusterName "
 az container create \
     --resource-group $ResourceGroupName \
     --name $ClusterName \
     --image apache/tika:latest \
     --dns-name-label $ClusterName-dev \
-    --cpu 2
-    --memory 3.5
+    --cpu 2 \
+    --memory 3.5 \
     --ports 9998
 
 # Show the URL
