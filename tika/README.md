@@ -98,4 +98,9 @@ Scripts derived from [Microsoft Documentation](https://docs.microsoft.com/en-us/
 1. Run script `azure-4...` to teardown the resource group.  
     1. This may take 20 minutes
 
+# Video Walkthrough
+* Intro https://www.youtube.com/embed/LIrhtFcqYus
+* Azure App Service https://www.youtube.com/embed/Nj7E2GbVJuM
+* Azure Service Fabric https://www.youtube.com/embed/qfgUCfnA76w
+* Azure Container Service https://www.youtube.com/embed/BAOHGvIpWVw  
 
