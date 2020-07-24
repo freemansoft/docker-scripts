@@ -4,3 +4,5 @@
 **/azure-variables.sh
 **/*.pem
 **/*.pfx
+**/*.jar
+**/*.zip

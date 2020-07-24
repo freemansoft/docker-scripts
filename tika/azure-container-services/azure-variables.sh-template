@@ -1,4 +1,7 @@
 # copy this file and name it azure-variables.sh
+# Show all executed statements
+#set -x
+
 ResourceGroupName="fsi-tika-resources" 
 ClusterName="fsi-tika" 
 Location="eastus" 
