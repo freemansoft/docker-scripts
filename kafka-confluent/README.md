@@ -3,7 +3,7 @@
 * Exists as docker-compose to make multi-node easier .
 * Confluent with UI: https://docs.confluent.io/current/quickstart/ce-docker-quickstart.html
 * Community without: UI https://docs.confluent.io/current/quickstart/cos-docker-quickstart.html
-* Copied from: https://github.com/confluentinc/examples/tree/5.3.1-post/cp-all-in-one
+* Copied from: https://github.com/confluentinc/cp-all-in-one/
 
 # Features
 * Creates named volumes to persist across restarts.  You have to remove the named volume to restore to original
