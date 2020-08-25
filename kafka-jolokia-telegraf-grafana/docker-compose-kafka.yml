@@ -16,7 +16,7 @@ services:
     #   - zookeeper_data:/var/lib/zookeeper/data
     #   - zookeeper_log:/var/lib/zookeeper/log
     networks:
-      - private_net
+      - streaming
 
   broker:
     # community version is confluentinc/cp-kafka
@@ -50,10 +50,10 @@ services:
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-    #volumes:
-    #  - kafka_data:/var/lib/kafka/data      
+    # volumes:
+    #   - kafka_data:/var/lib/kafka/data      
     networks:
-      - private_net
+      - streaming
 
   schema-registry:
     image: confluentinc/cp-schema-registry:5.5.1
@@ -68,7 +68,7 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
     networks:
-      - private_net
+      - streaming
 
   connect:
     # changed from kafka-connect-datagen to cp-server-connect-datagent sometime between 5.3.1 and 5.5.0
@@ -80,6 +80,7 @@ services:
       - broker
       - schema-registry
     ports:
+      # expose on different port - conflict with influxdb
       - "8083:8083"
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'broker:29092'
@@ -106,7 +107,7 @@ services:
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
     networks:
-      - private_net
+      - streaming
 
   control-center:
     # deprecated confluentinc/cp-control-center 
@@ -134,7 +135,7 @@ services:
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
     networks:
-      - private_net
+      - streaming
 
   ksqldb-server:
     # changed from cp-ksql-servers to cp-ksqldb-servers between 5.3.1 and 5.5.1
@@ -158,7 +159,7 @@ services:
       KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
       KSQL_KSQL_CONNECT_URL: "http://connect:8083"
     networks:
-      - private_net
+      - streaming
 
   ksqldb-cli:
     # changed from cp-ksql-cli between 5.3.1 and 5.5.1
@@ -171,7 +172,7 @@ services:
     entrypoint: /bin/sh
     tty: true
     networks:
-      - private_net
+      - streaming
 
   ksql-datagen:
     # Changed from ksql-examples to ksqldb-examples between 5.3.1 and 5.5.1
@@ -197,7 +198,7 @@ services:
       STREAMS_SCHEMA_REGISTRY_HOST: schema-registry
       STREAMS_SCHEMA_REGISTRY_PORT: 8081
     networks:
-      - private_net
+      - streaming
 
   rest-proxy:
     image: confluentinc/cp-kafka-rest:5.5.1
@@ -215,7 +216,9 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
     networks:
-      - private_net
+      - streaming
+
+  
 
 volumes:
   # will be <svc_name>_data
@@ -227,8 +230,13 @@ volumes:
   # will be <svc_name>_data 
   kafka_data:
     driver: local
+  grafana_volume:
+    driver: local
+  influxdb_volume:
+    driver: local
 
 # the actual name will be <directory_name>_<network_name>
 networks:
-  private_net:
+  streaming:
     driver: bridge
+  monitoring:

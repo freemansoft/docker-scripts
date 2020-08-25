@@ -1,0 +1,68 @@
+# from https://docs.confluent.io/current/quickstart/ce-docker-quickstart.html
+# contents from https://github.com/confluentinc/cp-all-in-one/ formerly https://github.com/confluentinc/examples/tree/5.5.1-post/cp-all-in-one
+---
+version: '3.3'
+services:
+  # section from https://github.com/nicolargo/docker-influxdb-grafana/blob/master/docker-compose.yml
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - 8086:8086
+    env_file:
+    - 'env.influxdb'
+    networks:
+      - monitoring
+    volumes:
+      # data persistence
+      - influxdb_volume:/var/lib/influxdb
+
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    depends_on:
+      - influxdb
+    networks:
+      - monitoring
+      - streaming
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+
+  # default admin/admin
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 3000:3000
+    env_file:
+      - 'env.grafana'
+    user: "0"
+    depends_on:
+      - influxdb
+    networks:
+      - monitoring
+    volumes:
+      # data persistence
+      - grafana_volume:/var/lib/grafana
+
+
+volumes:
+  # will be <svc_name>_data
+  zookeeper_data:
+    driver: local
+  # will be <svc_name>_log
+  zookeeper_log:
+    driver: local
+  # will be <svc_name>_data 
+  kafka_data:
+    driver: local
+  grafana_volume:
+    driver: local
+  influxdb_volume:
+    driver: local
+
+# the actual name will be <directory_name>_<network_name>
+networks:
+  streaming:
+    driver: bridge
+  monitoring:
