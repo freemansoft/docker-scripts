@@ -19,3 +19,5 @@ Topic statistics exist in _confluent-metrix_
 7. Run Queries
   * _To be documented_
 
+## References
+See _sample-jolokia-beans.json_ for all the mbean data coughed up by Jolokia for a unadulterated Kafka broker
