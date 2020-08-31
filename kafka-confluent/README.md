@@ -13,14 +13,6 @@
 * The Kafka / Confluent web UI is on http://localhost:9021/
 * Recommends allocating 8GB of memory to Docker
 
-## Jolokia
-* Builds a docker container that includes the Jolokia agent to expose JMX over HTTP.
-* cd into that directory
-    * > cd jolokia
-    * >build.sh
-    * >docker-compose up
-* Jolokia port 8778 is exposed to the host for demonstration http://localhost:8778/jolokia/list
-
 # Docker Management
 See README.md in the [root of this repo](../README.md)
 
