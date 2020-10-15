@@ -17,7 +17,7 @@ services:
     environment:
       DS_LICENSE: accept
       HEAP_NEWSIZE: 128M
-      MAX_HEAP_SIZE: 3G
+      MAX_HEAP_SIZE: 4G
     volumes:
     - dse_data:/var/lib/cassandra
     # Allow DSE to lock memory with mlock

@@ -42,7 +42,7 @@ You can clean up individual volumes or all volumes in your docker environment.
 # Features
 * Creates named volumes for storage and notebooks to persist across restarts.  You have to remove the named volume to restore to original
 * Exposes everything on localhost
-* Datastacks DSE is limited to 3GB heap
+* Datastacks DSE is limited to 4GB heap
 
 # Docker Management
 See README.md in the [root of this repo](../README.md)
