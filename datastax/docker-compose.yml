@@ -19,7 +19,7 @@ services:
       HEAP_NEWSIZE: 128M
       MAX_HEAP_SIZE: 3G
     volumes:
-    - datastax_data:/var/lib/cassandra
+    - dse_data:/var/lib/cassandra
     # Allow DSE to lock memory with mlock
     cap_add:
     - IPC_LOCK
@@ -39,15 +39,15 @@ services:
     environment:
       DS_LICENSE: accept
     volumes:
-    - datastax_studio_notebooks:/var/lib/datastax-studio
+    - studio_notebooks:/var/lib/datastax-studio
     networks:
       - dse
 
 volumes:
   # will be <dir_name>_data
-  datastax_studio_notebooks:
+  studio_notebooks:
     driver: local
-  datastax_data:
+  dse_data:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>
