@@ -39,10 +39,10 @@ This has been tested as working with docker-compose 1.27.4. Some earlier version
 You can clean up individual volumes or all volumes in your docker environment.
 1. You can clean up **ALL** volumes `docker volume prune`
 
-
 # Features
 * Creates named volumes for storage and notebooks to persist across restarts.  You have to remove the named volume to restore to original
 * Exposes everything on localhost
+* Datastacks DSE is limited to 3GB heap
 
 # Docker Management
 See README.md in the [root of this repo](../README.md)

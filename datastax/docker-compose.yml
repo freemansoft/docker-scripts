@@ -16,6 +16,8 @@ services:
     - "9077:9077" # always on sql
     environment:
       DS_LICENSE: accept
+      HEAP_NEWSIZE: 128M
+      MAX_HEAP_SIZE: 3G
     volumes:
     - datastax_data:/var/lib/cassandra
     # Allow DSE to lock memory with mlock
