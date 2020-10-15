@@ -1,0 +1,58 @@
+version: '3.3'
+# latest datastax is not maintained
+#
+# must create create graph
+# docker create network datastax
+
+services:
+  # DataStax Enterprise
+  dse:
+    # Specify the container name explicitly to avoid getting underscores
+    container_name: dse
+    image: datastax/dse-server:6.8.4
+    # Enable Graph - -f enabled by default
+    command: [ -g -s ]
+    ports:
+    - "9042:9042" # cassandra
+    - "8182:8182" # graph
+    - "9077:9077" # always on sql
+    environment:
+      DS_LICENSE: accept
+    volumes:
+    - datastax_data:/var/lib/cassandra
+    # Allow DSE to lock memory with mlock
+    cap_add:
+    - IPC_LOCK
+    ulimits:
+      memlock: -1
+    networks:
+      - dse
+
+# One instance of DataStax Studio
+  studio:
+    image: datastax/dse-studio:6.8.4
+    ports:
+    # The Web UI exposed to our host
+    - "9091:9091"
+    depends_on:
+    - dse
+    environment:
+      DS_LICENSE: accept
+    volumes:
+    - datastax_studio_notebooks:/var/lib/datastax-studio
+    networks:
+      - dse
+
+volumes:
+  # will be <dir_name>_data
+  datastax_studio_notebooks:
+    driver: local
+  datastax_data:
+    driver: local
+
+# the actual name will be <directory_name>_<network_name>
+networks:
+  dse:
+    external: 
+      name: datastax
+    #driver: bridge
