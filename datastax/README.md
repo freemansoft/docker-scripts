@@ -1,5 +1,3 @@
-> :warning:  Graph does not work. Feels like a networkng issue
-
 # Purpose
 * Manage _Datastax DSE / Cassandra_ server with _Graph_ enabled and the Datastax Studio. 
 * Exists as docker-compose to make multi-node easier .
