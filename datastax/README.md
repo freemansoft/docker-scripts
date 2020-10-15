@@ -2,6 +2,8 @@
 * Manage _Datastax DSE / Cassandra_ server with _Graph_ enabled and the Datastax Studio. 
 * Exists as docker-compose to make multi-node easier .
 
+![Datastax and Studio in Docker](./Datastax-w-Studio-in-Docker.png)
+
 ## References
 * [Datastax DSE reference](https://docs.datastax.com/en/docker/doc/docker/docker67/dockerDSE.html)
 * Good blog article. Debugging info helped let us know what neededed/could need to be configured in docker-compose.yml [Tillman blog](http://www.luketillman.com/datastax-graph-and-studio-with-docker-compose/)
