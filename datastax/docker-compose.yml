@@ -49,9 +49,8 @@ volumes:
     driver: local
 
 # the actual name will be <directory_name>_<network_name>
+# specify name explicitly to avoid underscores
 networks:
   dse:
     driver: bridge
     name: datastax
-#    external: 
-#      name: datastax

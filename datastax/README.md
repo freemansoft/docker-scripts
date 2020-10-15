@@ -3,8 +3,9 @@
 * Exists as docker-compose to make multi-node easier .
 
 ## References
-* Datastax reference: https://docs.datastax.com/en/docker/doc/docker/docker67/dockerDSE.html
-* Datastax sample repository: https://github.com/datastax/docker-images/tree/master/example_compose_yamls
+* [Datastax DSE reference](https://docs.datastax.com/en/docker/doc/docker/docker67/dockerDSE.html)
+* Good blog article. Debugging info helped let us know what neededed/could need to be configured in docker-compose.yml [Tillman blog](http://www.luketillman.com/datastax-graph-and-studio-with-docker-compose/)
+* Datastax sample [GitHub repository](https://github.com/datastax/docker-images/tree/master/example_compose_yamls) with single containers
 
 # Ubuntu - Docker Compose Version
 This `docker-compose.yml` file requires a version of docker-compose that supports version 3.8 files because of the network name setting.
