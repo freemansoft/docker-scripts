@@ -1,8 +1,6 @@
-version: '3.8'
-# latest datastax is not maintained
-#
-# must create create graph
-# docker create network datastax
+version: '3.5'
+# :latest datastax is not maintained
+# Need a version of docker-compose that supports network name
 
 services:
   # DataStax Enterprise

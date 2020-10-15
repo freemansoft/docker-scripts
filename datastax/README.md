@@ -36,6 +36,11 @@ This has been tested as working with docker-compose 1.27.4. Some earlier version
 1. `ctrl-c`
 1. `docker-compose down`
 
+## Optional cleanup volumes 
+You can clean up individual volumes or all volumes in your docker environment.
+1. You can clean up **ALL** volumes `docker volume prune`
+
+
 # Features
 * Creates named volumes for storage and notebooks to persist across restarts.  You have to remove the named volume to restore to original
 * Exposes everything on localhost
