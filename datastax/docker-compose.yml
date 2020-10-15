@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 # latest datastax is not maintained
 #
 # must create create graph
@@ -53,6 +53,7 @@ volumes:
 # the actual name will be <directory_name>_<network_name>
 networks:
   dse:
-    external: 
-      name: datastax
-    #driver: bridge
+    driver: bridge
+    name: datastax
+#    external: 
+#      name: datastax
