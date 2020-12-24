@@ -11,9 +11,9 @@ services:
     # Enable Graph - -f enabled by default
     command: [ -g -s ]
     ports:
-    - "9042:9042" # cassandra
-    - "8182:8182" # graph
-    - "9077:9077" # always on sql
+    - "9042:9042" # Expose cassandra to host
+    - "8182:8182" # Expose graph to host
+    - "9077:9077" # Expose always on sql to host
     environment:
       DS_LICENSE: accept
       HEAP_NEWSIZE: 128M
@@ -32,8 +32,7 @@ services:
   studio:
     image: datastax/dse-studio:6.8.4
     ports:
-    # The Web UI exposed to our host
-    - "9091:9091"
+    - "9091:9091" # The Web UI exposed to our host
     depends_on:
     - dse
     environment:
