@@ -4,6 +4,7 @@
 .config
 .ipython
 .jupyter
+.keras
 .local
 .vscode
 data/

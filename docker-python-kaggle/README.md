@@ -60,5 +60,8 @@ Your terminal will be logged into the container after the previous step.  Launch
 `ctrl-c` the terminal window to terminate the container
 
 # Sample Notebooks
-* wget https://github.com/sedelmeyer/geopandas-tutorial/raw/master/geopandas-tutorial.ipynb
-* wget https://raw.githubusercontent.com/DerwenAI/ibm_dsc_articles/master/2020_05/
+No particular order or suitability.  Just picked them because they worked for me.
+* Geopandas tutorial
+    * wget https://github.com/sedelmeyer/geopandas-tutorial/raw/master/geopandas-tutorial.ipynb
+* https://www.kaggle.com/bono1020/tensorboard-tutorial
+* https://github.com/DerwenAI/ibm_dsc_articles/
