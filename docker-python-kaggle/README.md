@@ -61,3 +61,4 @@ Your terminal will be logged into the container after the previous step.  Launch
 
 # Sample Notebooks
 * wget https://github.com/sedelmeyer/geopandas-tutorial/raw/master/geopandas-tutorial.ipynb
+* wget https://raw.githubusercontent.com/DerwenAI/ibm_dsc_articles/master/2020_05/
