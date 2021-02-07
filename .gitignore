@@ -1,8 +1,17 @@
 **/.ipynb_checkpoints
+*.ipynb
+.cache
+.config
+.ipython
+.jupyter
+.local
 .vscode
+data/
 **/fsi*
 **/azure-variables.sh
 **/*.pem
 **/*.pfx
 **/*.jar
 **/*.zip
+**/*.gz
+**/*.tar
