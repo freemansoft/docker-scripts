@@ -3,17 +3,19 @@ Simple compose scripts to bring up various open source or 3rd party on local doc
 # Available Containers/Images
 | Product                                  | Distribution             | GUI container     | Min Memory | Local Mounts |
 |------------------------------------------|--------------------------|-------------------|------------|--------------|
-| [Anaconda](anaconda/README.md)           | continuum.io             | Jupyter notebook  | ??   | ~/Documents/GitHub |
+| [Anaconda](anaconda/README.md)           | continuum.io             | Jupyter notebook  | ??         | ~/Documents/GitHub |
+| [Datastax](datastax/README.md)           | dse                      | DSE Studio        | 2GB/4GB ?  | -none |
 | [Dask](dask/README.md)                   | https://dask.org/        | Dask Dashboard + Jupyter | ??  | ~/Documents/GitHub |
-| [DynamoDB](dynamodb/README.md)           | dyanmodb-local           | with web shell    | ??   | -none- |
-| [Elasticsearch](elasticsearch/README.md) | Elastic.co               | Kibana            | ??   | -none- |
-| [Kafka](kafka-confluent/README.md)       | Confluent.io CE with KSQL| Confluent GUI     | 8GB  | -none- |
-| [mongodb](mongodb/README.md)             | Mongo                    | Mongo Express     | ??   | -none- |
-| [portainer](portainer/README.md)         | Portainer.io             | Portainer UI      | ??   | -none- |
-| [neo4j](neo4j/README.md)                 | Neo4j.com                | built in console  | ??   | -none- |
-| [redis](https://redis.io/)               | Redis                    | Redis-Commander   | ??   | -none- |
-| [Tensorflow](tensforflow/README.md)      | tensorflow.org           | Jupyter notebook  | ??   | ~/Documents/GitHub |
-| [Tika](tika/README.md)                   | https://tika.apache.org/ | Text extraction   | ??   | -none- |
+| [DynamoDB](dynamodb/README.md)           | dyanmodb-local           | with web shell    | ??         | -none- |
+| [Elasticsearch](elasticsearch/README.md) | Elastic.co               | Kibana            | ??         | -none- |
+| [Kaggle Docker](docker-python-kaggle/README.m|) | Kaggle            | Jupyter notebook  | 4GB        | $PWD   |
+| [Kafka](kafka-confluent/README.md)       | Confluent.io CE with KSQL| Confluent GUI     | 8GB        | -none- |
+| [mongodb](mongodb/README.md)             | Mongo                    | Mongo Express     | ??         | -none- |
+| [neo4j](neo4j/README.md)                 | Neo4j.com                | built in console  | ??         | -none- |
+| [portainer](portainer/README.md)         | Portainer.io             | Portainer UI      | ??         | -none- |
+| [redis](https://redis.io/)               | Redis                    | Redis-Commander   | ??         | -none- |
+| [Tensorflow](tensforflow/README.md)      | tensorflow.org           | Jupyter notebook  | ??         | ~/Documents/GitHub |
+| [Tika](tika/README.md)                   | https://tika.apache.org/ | Text extraction   | ??         | -none- |
 
 # Using Docker
 Open a command prompt.  Change pwd to the docker container directiory in this repository and execute one of the following commands.
