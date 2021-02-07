@@ -1,10 +1,17 @@
-Kaggle provides a Docker Image that people can use as part of their Kaggle events.  This container is stuffed with libraries and components that make this an _uber python container_.  The amazing Kaagle Docker image is located at.  Beware. The Kaggle docker images contains a lot and is **18GB** at rest
+Kaggle provides a Docker Image that people can use as part of their Kaggle events.  This container is stuffed with libraries and components that make this an _uber python container_.  The amazing Kaagle Docker image is located at.  Beware. The Kaggle docker images contains a lot pieces. 
+
+| CPU Image size on disk (2021) | GPU Image size on disk (2021) |
+| -- | -- |
+| **18GB** | **33GB** | 
 
 The Kaggle docker repository for the python container can be found at  https://github.com/Kaggle/docker-python
 
 ## Prep
 1. Your current working directory on the host where you type this command will be mounted into the container as a notebook direcory
 1. cd to a directory where you want your notebooks stored.  It will be mounted into the container.
+1. Set your Docker memory settings to be above 4GB, possibly 8gb depending on your data.  
+    * The default Mac docker size is 2GB as of 2020.  
+    * Windows WSL 2 allocates 1/2 of total memory for docker by default.
 
 # Start the docker container and the Jupyter Notebook server with one command
 The Kaggle image includes a jupyter startup script `run_jupyter.sh` that makes it easy to start the container and the notebook server
