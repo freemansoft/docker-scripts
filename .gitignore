@@ -16,3 +16,5 @@ data/
 **/*.zip
 **/*.gz
 **/*.tar
+
+.env
