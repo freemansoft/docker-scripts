@@ -68,6 +68,15 @@ services:
       setup:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    command: >
+      bash -c '
+        echo "Installing plugins";
+        whoami;
+        ./bin/elasticsearch-plugin install analysis-icu;
+        ./bin/elasticsearch-plugin install analysis-phonetic;
+        echo "All done installing plugins! Restarting elasticsearch";
+        bash /usr/local/bin/docker-entrypoint.sh elasticsearch;
+      '
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata01:/usr/share/elasticsearch/data
@@ -110,6 +119,15 @@ services:
     depends_on:
       - es01
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    command: >
+      bash -c '
+        echo "Installing plugins";
+        whoami;
+        ./bin/elasticsearch-plugin install analysis-icu;
+        ./bin/elasticsearch-plugin install analysis-phonetic;
+        echo "All done installing plugins! Restarting elasticsearch";
+        bash /usr/local/bin/docker-entrypoint.sh elasticsearch;
+      '
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata02:/usr/share/elasticsearch/data
@@ -149,6 +167,15 @@ services:
     depends_on:
       - es02
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    command: >
+      bash -c '
+        echo "Installing plugins";
+        whoami;
+        ./bin/elasticsearch-plugin install analysis-icu;
+        ./bin/elasticsearch-plugin install analysis-phonetic;
+        echo "All done installing plugins! Restarting elasticsearch";
+        bash /usr/local/bin/docker-entrypoint.sh elasticsearch;
+      '
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - esdata03:/usr/share/elasticsearch/data

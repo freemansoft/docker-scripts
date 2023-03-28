@@ -14,6 +14,7 @@ Todo: Redraw this using mermaid.js
 # Features
 * Creates named volumes to persist across restarts.  You have to remove the named volume to restore to original
 * Kibana web UI is on http://localhost:5601
+* Installs analysis-icu and analysis-phonetic **on startup** and not in a Dockerfile.  This implies Internet access.
 
 # Docker Management
 See README.md in the [root of this repo](../README.md) for interesting docker commands.
