@@ -29,7 +29,7 @@ You may see this when running Docker in WSL/WSL2 on Microsoft Windows
 The fix is to run this in the WSL Docker VM but how to do that? Probably the .wslconfig or wsl.conf file.
 `sudo sysctl -w vm.max_map_count=262144`
 
-This alternative works but needs to run every time you restart docker
+This alternative works but needs to run every time you restart docker.  Run this from powershell on the Windows host.
 `wsl -d docker-desktop sysctl -w vm.max_map_count=262144`
 
 Discussions of this issue can be found here
