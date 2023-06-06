@@ -29,10 +29,10 @@ You may see this when running Docker in WSL/WSL2 on Microsoft Windows
 ### In the kernel
 You can probably fix this in the kernel config in the WSL linux VM. I haven't done that
 
-## Change all VMs to ahve the same configuration using %userprofile%/.wslconfig
-A bute force fix is edit the wsl config files for all of WSL (.wslconfig) or for just WSL Docker VM (wsl.conf file).
+### Globally change all WSL VMs to have the same configuration using %userprofile%/.wslconfig
+A bute force fix is edit the wsl config files for all of WSL (.wslconfig).  This configures all the VMs that wsl instances run. Alternatively, you can change the setting for just the WSL _Docker_ VM (wsl.conf file).
 1. Create a `.wslconfig` file in `%userprofile%` probably  `C:\Users\<UserName>\.wslconfig.`
-1. Put this content in the file
+1. Put this code in the `.wslconfig` file and save the file
 ```
 wsl -d docker-desktop
 sudo sysctl -w vm.max_map_count=262144
@@ -42,7 +42,7 @@ sudo sysctl -w vm.max_map_count=262144
 wsl --shutdown
 ```
 
-## Change just a single WSL VM using wsl.conf
+##E Change just a single WSL VM using wsl.conf
 You can put add a section to `/etc/wsl.conf` in just the docker VM. I haven't done this so check the docs
 
 ## Manual command after every restart restart
