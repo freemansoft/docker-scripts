@@ -1,4 +1,10 @@
+# Purpose
 Simple compose scripts to bring up various open source or 3rd party on local docker.
+
+# License
+MIT License. See LICENSE.md
+
+TODO: Add license text to each file
 
 # Available Containers/Images
 | Product                                  | Distribution             | GUI container     | Min Memory | Local Mounts |
