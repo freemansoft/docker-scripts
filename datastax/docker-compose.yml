@@ -7,7 +7,7 @@ services:
   dse:
     # Specify the container name explicitly to avoid getting underscores
     container_name: dse
-    image: datastax/dse-server:6.8.4
+    image: datastax/dse-server:6.8.65
     # Enable Graph - -f enabled by default
     command: [ -g -s ]
     ports:
@@ -18,6 +18,12 @@ services:
       DS_LICENSE: accept
       HEAP_NEWSIZE: 128M
       MAX_HEAP_SIZE: 4G
+      # DSE's startup script computes -XX:MaxDirectMemorySize as
+      # (detected host memory - MAX_HEAP_SIZE) / 2. On a host/VM with less
+      # memory available than MAX_HEAP_SIZE (common for local dev, e.g. a
+      # 2GB Colima VM), that goes negative and crashes the JVM at startup.
+      # Setting this explicitly bypasses the host-memory autodetection.
+      MAX_DIRECT_MEMORY: 512M
     volumes:
     - dse_data:/var/lib/cassandra
     # Allow DSE to lock memory with mlock
@@ -31,7 +37,7 @@ services:
 # One instance of DataStax Studio
   studio:
     container_name: studio
-    image: datastax/dse-studio:6.8.4
+    image: datastax/dse-studio:6.8.32
     ports:
     - "9091:9091" # The Web UI exposed to our host
     depends_on:

@@ -45,6 +45,9 @@ You can clean up individual volumes or all volumes in your docker environment.
 * Creates named volumes for storage and notebooks to persist across restarts.  You have to remove the named volume to restore to original
 * Exposes everything on localhost
 * Datastacks DSE is limited to 4GB heap
+* `dse-server` is on the 6.8.x line (6.8.65); `dse-studio` hasn't been updated by DataStax in years and tops out at 6.8.32 -- both are pinned to the 6.8 branch together rather than jumping the server to the newer, Studio-untested 6.9.x line
+* DataStax only publishes `linux/amd64` images for these, so on Apple Silicon Macs this runs under emulation (same as before this version bump) -- give Docker/Colima real memory (8GB+) dedicated to just this stack, since the 4GB heap plus Solr/Graph indices under emulation is heavier than it looks, and don't run this alongside another memory-hungry example (like kafka-confluent or elasticsearch) at the same time
+* Sets `MAX_DIRECT_MEMORY` explicitly (see comment in docker-compose.yml) because DSE's own memory autodetection can compute a negative value and crash the JVM on hosts with less memory than `MAX_HEAP_SIZE` available
 
 # Docker Management
 See README.md in the [root of this repo](../README.md)

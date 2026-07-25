@@ -1,0 +1,19 @@
+version: '3.3'
+# created from https://grafana.com/docs/loki/latest/setup/install/docker/
+services:
+  loki:
+    container_name: loki
+    hostname: loki
+    image: grafana/loki:3.7.4
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    ports:
+      - 3100:3100
+    networks:
+      - private_net
+
+# the actual name will be <directory_name>_<network_name>
+networks:
+  private_net:
+    driver: bridge

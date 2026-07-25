@@ -1,0 +1,31 @@
+version: '3.3'
+# created from https://hub.docker.com/r/grafana/grafana
+services:
+  grafana:
+    container_name: grafana
+    hostname: grafana
+    image: grafana/grafana:latest
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources
+    ports:
+      - 3000:3000
+    # lets the container resolve host.docker.internal, needed to reach the
+    # loki/ example's container across the docker-compose project boundary
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - private_net
+
+# will be <directory_name>_grafana_data
+volumes:
+  grafana_data:
+    driver: local
+
+# the actual name will be <directory_name>_<network_name>
+networks:
+  private_net:
+    driver: bridge

@@ -1,78 +1,93 @@
 # from https://docs.confluent.io/current/quickstart/ce-docker-quickstart.html
-# contents from https://github.com/confluentinc/cp-all-in-one/ formerly https://github.com/confluentinc/examples/tree/5.5.1-post/cp-all-in-one
----
-version: '3.3'
+# contents from https://github.com/confluentinc/cp-all-in-one/tree/v8.3.0/cp-all-in-one
+# Upgraded 2026-07 from a Confluent Platform 5.5.1 / ZooKeeper baseline to CP 8.3.0.
+# ZooKeeper is gone: CP dropped it in 8.0, so the "broker" service below runs in
+# KRaft combined mode (broker + controller in one process) instead.
+# Control Center is also new: the old cp-enterprise-control-center image is
+# deprecated, replaced by cp-enterprise-control-center-next-gen, which requires
+# the new prometheus/alertmanager services below to feed it metrics.
+# Not carried over: upstream's current baseline also bundles an Apache Flink
+# stack (flink-jobmanager/flink-taskmanager/flink-sql-client). Left out here to
+# keep this example's footprint close to what it was before -- add the
+# flink-* services back from the upstream link above if you want them.
+# Also not carried over: the old ksqldb-cli and ksql-datagen containers --
+# upstream no longer ships either; use `docker exec -it ksqldb-server ksql ...`
+# for a CLI, and the connect service below already includes the datagen plugin.
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:5.5.1
-    hostname: zookeeper
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    volumes:
-      - zookeeper_data:/var/lib/zookeeper/data
-      - zookeeper_log:/var/lib/zookeeper/log
-    networks:
-      - private_net
-
   broker:
-    # community version is confluentinc/cp-kafka
-    # changed from cp-enterprise-kafka to cp-server some time between 5.3.1 and 5.5.1
-    image: confluentinc/cp-server:5.5.1
+    image: confluentinc/cp-server:8.3.0
     hostname: broker
     container_name: broker
-    depends_on:
-      - zookeeper
     ports:
       - "9092:9092"
       - "9101:9101"
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KAFKA_METRIC_REPORTERS: io.confluent.telemetry.reporter.TelemetryReporter
       CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: broker:29092
-      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:2181
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@broker:29093'
+      KAFKA_LISTENERS: 'PLAINTEXT://broker:29092,CONTROLLER://broker:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-    volumes:
-      - kafka_data:/var/lib/kafka/data      
+      # Replace CLUSTER_ID with a unique base64 UUID using "bin/kafka-storage.sh random-uuid"
+      # See https://docs.confluent.io/kafka/operations-tools/kafka-tools.html#kafka-storage-sh
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_TYPE: "http"
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_ENABLED: "true"
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_CLIENT_BASE_URL: "http://prometheus:9090/api/v1/otlp"
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_CLIENT_COMPRESSION: "gzip"
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_API_KEY: "dummy"
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_API_SECRET: "dummy"
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_BUFFER_PENDING_BATCHES_MAX: "80"
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_BUFFER_BATCH_ITEMS_MAX: "4000"
+      KAFKA_CONFLUENT_TELEMETRY_EXPORTER_C3PLUSPLUS_BUFFER_INFLIGHT_SUBMISSIONS_MAX: "10"
+      KAFKA_CONFLUENT_TELEMETRY_METRICS_COLLECTOR_INTERVAL_MS: "60000"
+      KAFKA_CONFLUENT_TELEMETRY_REMOTECONFIG_CONFLUENT_ENABLED: "false"
+      KAFKA_CONFLUENT_CONSUMER_LAG_EMITTER_ENABLED: "true"
+    # No volume mount for /tmp/kraft-combined-logs: the broker image runs as a
+    # non-root user, and a Docker named volume defaults to root ownership, so
+    # mounting one here causes an AccessDeniedException on startup. Upstream's
+    # own baseline (and this example before the CP 8.3.0 upgrade) never
+    # persisted Kafka data either -- it's meant to be a disposable quickstart.
     networks:
       - private_net
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:5.5.1
+    image: confluentinc/cp-schema-registry:8.3.0
     hostname: schema-registry
     container_name: schema-registry
     depends_on:
-      - zookeeper
       - broker
     ports:
       - "8081:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
     networks:
       - private_net
 
   connect:
-    # changed from kafka-connect-datagen to cp-server-connect-datagent sometime between 5.3.1 and 5.5.0
-    image: cnfldemos/cp-server-connect-datagen:0.3.2-5.5.0
+    image: cnfldemos/cp-server-connect-datagen:0.6.4-7.6.0
     hostname: connect
     container_name: connect
     depends_on:
-      - zookeeper
       - broker
       - schema-registry
     ports:
@@ -80,7 +95,6 @@ services:
     environment:
       CONNECT_BOOTSTRAP_SERVERS: 'broker:29092'
       CONNECT_REST_ADVERTISED_HOST_NAME: connect
-      CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: compose-connect-group
       CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
@@ -92,49 +106,83 @@ services:
       CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
       CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       # CLASSPATH required due to CC-2422
-      CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-5.5.1.jar
+      CLASSPATH: /usr/share/java/monitoring-interceptors/monitoring-interceptors-8.3.0.jar
       CONNECT_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
       CONNECT_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
-      CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
+    networks:
+      - private_net
+
+  prometheus:
+    image: confluentinc/cp-enterprise-prometheus:2.5.0
+    hostname: cp-enterprise-prometheus
+    container_name: prometheus
+    volumes:
+      - ./vol/config:/mnt/config
+    ports:
+      - "9090:9090"
+    environment:
+      CONFIG_PATH: "/mnt/config"
+      SHOULD_LOG_TO_FILE: false
+      LOG_FILE: "/dev/null"
+    networks:
+      - private_net
+
+  alertmanager:
+    image: confluentinc/cp-enterprise-alertmanager:2.5.0
+    hostname: cp-enterprise-alertmanager
+    container_name: alertmanager
+    depends_on:
+      - prometheus
+    volumes:
+      - ./vol/config:/mnt/config
+    ports:
+      - "9093:9093"
+    environment:
+      CONFIG_PATH: "/mnt/config"
+      SHOULD_LOG_TO_FILE: false
+      LOG_FILE: "/dev/null"
     networks:
       - private_net
 
   control-center:
-    # deprecated confluentinc/cp-control-center 
-    image: confluentinc/cp-enterprise-control-center:5.5.1
+    image: confluentinc/cp-enterprise-control-center-next-gen:2.5.0
     hostname: control-center
     container_name: control-center
     depends_on:
-      - zookeeper
       - broker
       - schema-registry
       - connect
       - ksqldb-server
+      - prometheus
+      - alertmanager
     ports:
       - "9021:9021"
+    volumes:
+      - ./vol/config:/mnt/config
     environment:
       CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
-      CONTROL_CENTER_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8083'
-      CONTROL_CENTER_KSQL_URL: "http://ksqldb-server:8088"
-      CONTROL_CENTER_KSQL_ADVERTISED_URL: "http://localhost:8088"
+      CONTROL_CENTER_CONNECT_CONNECT-DEFAULT_CLUSTER: 'connect:8083'
+      CONTROL_CENTER_CONNECT_HEALTHCHECK_ENDPOINT: '/connectors'
+      CONTROL_CENTER_KSQL_KSQLDB1_URL: "http://ksqldb-server:8088"
+      CONTROL_CENTER_KSQL_KSQLDB1_ADVERTISED_URL: "http://localhost:8088"
       CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
       CONTROL_CENTER_REPLICATION_FACTOR: 1
       CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+      CONTROL_CENTER_PROMETHEUS_ENABLE: true
+      CONTROL_CENTER_PROMETHEUS_URL: http://prometheus:9090
+      CONTROL_CENTER_PROMETHEUS_RULES_FILE: /mnt/config/trigger_rules-generated.yml
+      CONTROL_CENTER_ALERTMANAGER_URL: http://alertmanager:9093
+      CONTROL_CENTER_ALERTMANAGER_CONFIG_FILE: /mnt/config/alertmanager-generated.yml
       PORT: 9021
     networks:
       - private_net
 
   ksqldb-server:
-    # changed from cp-ksql-servers to cp-ksqldb-servers between 5.3.1 and 5.5.1
-    image: confluentinc/cp-ksqldb-server:5.5.1
+    image: confluentinc/cp-ksqldb-server:8.3.0
     hostname: ksqldb-server
     container_name: ksqldb-server
     depends_on:
@@ -144,61 +192,24 @@ services:
       - "8088:8088"
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
-      KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
       KSQL_BOOTSTRAP_SERVERS: "broker:29092"
       KSQL_HOST_NAME: ksqldb-server
       KSQL_LISTENERS: "http://0.0.0.0:8088"
       KSQL_CACHE_MAX_BYTES_BUFFERING: 0
       KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
-      KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
-      KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
       KSQL_KSQL_CONNECT_URL: "http://connect:8083"
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_REPLICATION_FACTOR: 1
+      KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: 'true'
+      KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: 'true'
     networks:
       - private_net
 
-  ksqldb-cli:
-    # changed from cp-ksql-cli between 5.3.1 and 5.5.1
-    image: confluentinc/cp-ksqldb-cli:5.5.1
-    container_name: ksqldb-cli
-    depends_on:
-      - broker
-      - connect
-      - ksqldb-server
-    entrypoint: /bin/sh
-    tty: true
-    networks:
-      - private_net
-
-  ksql-datagen:
-    # Changed from ksql-examples to ksqldb-examples between 5.3.1 and 5.5.1
-    image: confluentinc/ksqldb-examples:5.5.1
-    hostname: ksql-datagen
-    container_name: ksql-datagen
-    depends_on:
-      - ksqldb-server
-      - broker
-      - schema-registry
-      - connect
-    command: "bash -c 'echo Waiting for Kafka to be ready... && \
-                       cub kafka-ready -b broker:29092 1 40 && \
-                       echo Waiting for Confluent Schema Registry to be ready... && \
-                       cub sr-ready schema-registry 8081 40 && \
-                       echo Waiting a few seconds for topic creation to finish... && \
-                       sleep 11 && \
-                       tail -f /dev/null'"
-    environment:
-      KSQL_CONFIG_DIR: "/etc/ksql"
-      KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
-      STREAMS_BOOTSTRAP_SERVERS: broker:29092
-      STREAMS_SCHEMA_REGISTRY_HOST: schema-registry
-      STREAMS_SCHEMA_REGISTRY_PORT: 8081
-    networks:
-      - private_net
-
+  # NOTE: the old "ksqldb-cli" and "ksql-datagen" containers from the 5.5.1
+  # baseline are gone -- upstream dropped both. Use
+  # `docker exec -it ksqldb-server ksql http://localhost:8088` for a CLI.
   rest-proxy:
-    image: confluentinc/cp-kafka-rest:5.5.1
+    image: confluentinc/cp-kafka-rest:8.3.0
     depends_on:
-      - zookeeper
       - broker
       - schema-registry
     ports:
@@ -212,17 +223,6 @@ services:
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
     networks:
       - private_net
-
-volumes:
-  # will be <svc_name>_data
-  zookeeper_data:
-    driver: local
-  # will be <svc_name>_log
-  zookeeper_log:
-    driver: local
-  # will be <svc_name>_data 
-  kafka_data:
-    driver: local
 
 # the actual name will be <directory_name>_<network_name>
 networks:

@@ -1,0 +1,42 @@
+# Minimal collector config: accept OTLP over gRPC and HTTP, print everything
+# received straight to the container logs. Point your app's OTLP exporter at
+# this container (grpc://localhost:4317 or http://localhost:4318) and
+# `docker logs otel-collector` to see traces/metrics/logs arrive.
+#
+# Traces/metrics have no backend wired up -- add an exporter block and
+# reference it in the relevant pipeline below once you have somewhere to
+# send them (e.g. Tempo for traces, Prometheus for metrics).
+#
+# Logs are also forwarded to Loki (the `loki/` example in this repo), via
+# host.docker.internal since each example is its own separate docker-compose
+# project/network. This only works if that example's container is actually
+# running -- otherwise the exporter just fails quietly in the background and
+# debug/stdout logging still works. Uses Loki's native OTLP log ingestion
+# endpoint (Loki 3.0+) via the generic otlphttp exporter -- the Collector's
+# dedicated "loki" exporter component was removed since this is now the
+# recommended path (see https://grafana.com/docs/loki/latest/send-data/otel/).
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  debug:
+    verbosity: detailed
+  otlp_http/loki:
+    endpoint: http://host.docker.internal:3100/otlp
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [debug]
+    metrics:
+      receivers: [otlp]
+      exporters: [debug]
+    logs:
+      receivers: [otlp]
+      exporters: [debug, otlp_http/loki]

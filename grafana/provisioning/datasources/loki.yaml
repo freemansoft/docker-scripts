@@ -1,0 +1,12 @@
+# auto-provisioned datasource pointing at the loki/ example in this repo.
+# Crosses the docker-compose project boundary via host.docker.internal --
+# see the note in README.md. Harmless if loki/ isn't running; the
+# datasource will just show as unreachable until it is.
+apiVersion: 1
+datasources:
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://host.docker.internal:3100
+    isDefault: false
+    editable: true

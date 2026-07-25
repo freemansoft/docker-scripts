@@ -1,8 +1,9 @@
 version: '3.2'
-# lifted from https://portainer.readthedocs.io/en/latest/deployment.html
+# lifted from https://docs.portainer.io/start/install-ce/server/docker/linux
+# portainer/portainer (no -ce suffix) is the old, no-longer-updated image name
 services:
   portainer:
-    image: portainer/portainer
+    image: portainer/portainer-ce:lts
     container_name: portainer
     command: -H unix:///var/run/docker.sock
     restart: always

@@ -4,6 +4,7 @@
 * Guide: https://neo4j.com/developer/docker-run-neo4j/
 
 # Features
+* Login is `neo4j` / `test1234` (current neo4j images reject passwords under 8 characters, so the old 4-character password no longer starts the container).
 * Creates named volumes to persist across restarts.  
 * The Neo4J web UI is on http://localhost:7474
 * Open shell command prompt with `docker exec -it neo4j /bin/bash`
