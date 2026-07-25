@@ -1,0 +1,30 @@
+version: '3.3'
+# created from https://hub.docker.com/_/rabbitmq
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: rabbitmq:management
+    environment:
+      # "guest"/"guest" only work when connecting from localhost inside the
+      # container, which host clients never are (even via port mapping), so
+      # a custom user is defined here instead.
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - private_net
+
+# will be <directory_name>_rabbitmq_data
+volumes:
+  rabbitmq_data:
+    driver: local
+
+# the actual name will be <directory_name>_<network_name>
+networks:
+  private_net:
+    driver: bridge

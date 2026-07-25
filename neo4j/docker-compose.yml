@@ -5,7 +5,8 @@ services:
     image: neo4j:latest
     container_name: neo4j
     environment:
-      - NEO4J_AUTH=neo4j/test
+      # current neo4j images reject passwords under 8 characters, so "test" alone no longer works
+      - NEO4J_AUTH=neo4j/test1234
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs

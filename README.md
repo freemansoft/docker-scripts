@@ -14,12 +14,17 @@ TODO: Add license text to each file
 | [Dask](dask/README.md)                   | https://dask.org/        | Dask Dashboard + Jupyter | ??  | ~/Documents/GitHub |
 | [DynamoDB](dynamodb/README.md)           | dyanmodb-local           | with web shell    | ??         | -none- |
 | [Elasticsearch](elasticsearch/README.md) | Elastic.co               | Kibana            | ??         | -none- |
+| [Grafana](grafana/README.md)             | Grafana Labs             | Grafana UI        | ??         | -none- |
 | [Kaggle Docker](docker-python-kaggle/README.m|) | Kaggle            | Jupyter notebook  | 4GB        | $PWD   |
 | [Kafka](kafka-confluent/README.md)       | Confluent.io CE with KSQL| Confluent GUI     | 8GB        | -none- |
+| [Loki](loki/README.md)                   | Grafana Labs             | -none-            | ??         | -none- |
 | [mongodb](mongodb/README.md)             | Mongo                    | Mongo Express     | ??         | -none- |
 | [neo4j](neo4j/README.md)                 | Neo4j.com                | built in console  | ??         | -none- |
+| [OTel Collector](otel-collector/README.md) | OpenTelemetry          | -none-            | ??         | -none- |
 | [portainer](portainer/README.md)         | Portainer.io             | Portainer UI      | ??         | -none- |
+| [RabbitMQ](rabbitmq/README.md)           | rabbitmq.com             | Management UI     | ??         | -none- |
 | [redis](https://redis.io/)               | Redis                    | Redis-Commander   | ??         | -none- |
+| [Temporal](temporal/README.md)           | Temporal.io              | Temporal Web UI   | ??         | -none- |
 | [Tensorflow](tensforflow/README.md)      | tensorflow.org           | Jupyter notebook  | ??         | ~/Documents/GitHub |
 | [Tika](tika/README.md)                   | https://tika.apache.org/ | Text extraction   | ??         | -none- |
 

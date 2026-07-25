@@ -1,0 +1,76 @@
+version: '3.5'
+# created from https://github.com/temporalio/docker-compose (postgres variant)
+services:
+  postgresql:
+    container_name: temporal-postgresql
+    hostname: temporal-postgresql
+    image: postgres:16
+    environment:
+      POSTGRES_USER: temporal
+      POSTGRES_PASSWORD: temporal
+    volumes:
+      - temporal_postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - private_net
+
+  temporal:
+    container_name: temporal
+    hostname: temporal
+    depends_on:
+      - postgresql
+    image: temporalio/auto-setup:1.29.1
+    environment:
+      - DB=postgres12
+      - DB_PORT=5432
+      - POSTGRES_USER=temporal
+      - POSTGRES_PWD=temporal
+      - POSTGRES_SEEDS=postgresql
+      - DYNAMIC_CONFIG_FILE_PATH=config/dynamicconfig/development-sql.yaml
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CLI_ADDRESS=temporal:7233
+    volumes:
+      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
+    ports:
+      - 7233:7233
+    networks:
+      - private_net
+
+  temporal-admin-tools:
+    container_name: temporal-admin-tools
+    hostname: temporal-admin-tools
+    depends_on:
+      - temporal
+    image: temporalio/admin-tools:1.29.1-tctl-1.18.4-cli-1.5.0
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CLI_ADDRESS=temporal:7233
+    stdin_open: true
+    tty: true
+    networks:
+      - private_net
+
+  temporal-ui:
+    container_name: temporal-ui
+    hostname: temporal-ui
+    depends_on:
+      - temporal
+    image: temporalio/ui:2.34.0
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+      - TEMPORAL_CORS_ORIGINS=http://localhost:8080
+    ports:
+      - 8080:8080
+    networks:
+      - private_net
+
+# will be <directory_name>_temporal_postgres_data
+volumes:
+  temporal_postgres_data:
+    driver: local
+
+# the actual name will be <directory_name>_<network_name>
+networks:
+  private_net:
+    driver: bridge

@@ -10,5 +10,5 @@ services:
     image: apache/tika:latest
     ports:
       # remap to 80 for large cloud providers
-      - 80:9998/http
+      - 80:9998/tcp
 
