@@ -1,0 +1,40 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "claude plugin marketplace add anthropics/claude-plugins-official --scope project",
+            "timeout": 30,
+            "statusMessage": "Checking required plugins are installed..."
+          },
+          {
+            "type": "command",
+            "command": "claude plugin install superpowers@claude-plugins-official --scope project",
+            "timeout": 30,
+            "statusMessage": "Checking required plugins are installed..."
+          },
+          {
+            "type": "command",
+            "command": "claude plugin install skill-creator@claude-plugins-official --scope project",
+            "timeout": 30,
+            "statusMessage": "Checking required plugins are installed..."
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    }
+  }
+}

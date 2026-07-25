@@ -1,0 +1,63 @@
+{
+  "skill_name": "docker-example",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Add a new example to this repo for RabbitMQ with the management UI plugin enabled, similar to how the other single-node services here are set up.",
+      "expected_output": "A new rabbitmq/ directory with docker-compose.yml (private_net network, named volume for data, container_name/hostname set, version 3.3, source comment) and README.md (Purpose/Features/Docker Management/IDE Integration sections, management UI URL and default login called out), plus a new row added to the root README.md table.",
+      "files": [],
+      "assertions": [
+        "New service directory exists containing a docker-compose.yml",
+        "docker-compose.yml pins version '3.3' matching the rest of the repo",
+        "docker-compose.yml sets container_name and hostname explicitly for the rabbitmq service",
+        "docker-compose.yml joins a bridge network named private_net (reuses repo convention, doesn't invent a new network name)",
+        "docker-compose.yml has a named volume with a comment noting docker-compose prefixes the actual volume name with the directory name",
+        "Management UI port (15672) is exposed in docker-compose.yml",
+        "README.md contains the four standard section headers: # Purpose, # Features, # Docker Management, # IDE Integration",
+        "README.md's # Docker Management section links back to the root README with the repo's stock wording",
+        "Root README.md table has a new row for the RabbitMQ example"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The elasticsearch example in this repo keeps getting OOM-killed on my laptop. Can you tune it down to run comfortably with 2GB total instead of whatever it's currently set to?",
+      "expected_output": "elasticsearch/.env.template (and .env if present) MEM_LIMIT and/or heap-related values adjusted to fit a 2GB budget across the 3-node cluster, using the existing MEM_LIMIT env-var pattern rather than hardcoding values into docker-compose.yml. README.md updated if the documented behavior/values change. Root README Min Memory column updated if it names a concrete number.",
+      "files": [],
+      "assertions": [
+        "Memory change is expressed through the existing MEM_LIMIT env-var pattern in .env/.env.template rather than hardcoded directly into docker-compose.yml",
+        "Per-node mem_limit values across the 3 ES nodes (plus Kibana if included) sum to roughly a 2GB total budget, not left at the old default",
+        "docker-compose.yml's service structure (node count, healthchecks, networks, volumes) is otherwise left intact -- no gratuitous unrelated rewrite",
+        "README.md or .env.template comments reflect the new memory guidance if the old value was documented anywhere",
+        "Root README.md Min Memory column for elasticsearch is updated if it previously stated a concrete number"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I want to add a Memcached example to this repo, just a plain single-node instance, nothing fancy, no web UI needed.",
+      "expected_output": "A new memcached/ directory with a minimal docker-compose.yml (private_net network, container_name/hostname, version 3.3, source comment; volumes only if memcached actually needs persistence, otherwise omitted since it's in-memory only) and README.md following the standard sections, with GUI noted as none. Root README table gets a new row with GUI column as '-none-'.",
+      "files": [],
+      "assertions": [
+        "New service directory exists containing a docker-compose.yml",
+        "docker-compose.yml pins version '3.3' matching the rest of the repo",
+        "docker-compose.yml sets container_name and hostname explicitly",
+        "docker-compose.yml joins a bridge network named private_net (reuses repo convention)",
+        "docker-compose.yml does not add a named volume for persistence (memcached is in-memory only, a volume would be a fabricated feature)",
+        "README.md contains the four standard section headers and notes there is no GUI/web UI",
+        "Root README.md table has a new row for the Memcached example with GUI container column set to none (e.g. '-none-')"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "The kafka-confluent example in this repo is pinned to Confluent Platform 5.5.1, which is really old at this point. Can you upgrade it to whatever the current recommended Confluent all-in-one docker-compose baseline is, not just bump the version number?",
+      "expected_output": "kafka-confluent/docker-compose.yml image tags moved consistently to a current Confluent Platform version across all services, following today's upstream cp-all-in-one baseline (re-derived from the upstream links in the file's header comments) rather than a mechanical find/replace of '5.5.1'. If the current upstream baseline structurally differs from the old one (e.g. Zookeeper vs KRaft), the agent should surface that as a decision rather than silently picking one. README.md References/Features updated to match, and the old version noted somewhere as having been replaced.",
+      "files": [],
+      "assertions": [
+        "No image tag in kafka-confluent/docker-compose.yml still reads 5.5.1",
+        "All confluentinc platform image tags (cp-server, cp-zookeeper or its replacement, cp-schema-registry, cp-enterprise-control-center, ksqldb images, cp-kafka-rest) are bumped to the same new platform version consistently, not a partial upgrade",
+        "SUMMARY.md or README.md explicitly calls out what upstream changed structurally between the old and new baseline (e.g. Zookeeper vs KRaft), rather than being silent about it",
+        "README.md's # References links are checked/updated against the current upstream doc/repo locations",
+        "Old version (5.5.1) is noted somewhere as the version being replaced (SUMMARY.md, README, or commit-style note), so the upgrade is traceable"
+      ]
+    }
+  ]
+}

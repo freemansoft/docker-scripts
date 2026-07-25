@@ -18,3 +18,7 @@ data/
 **/*.tar
 
 .env
+
+# Claude Code: personal settings and skill-creator eval/benchmark scratch data
+.claude/settings.local.json
+.claude/skills/*-workspace/
