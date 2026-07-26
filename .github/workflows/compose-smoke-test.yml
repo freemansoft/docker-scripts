@@ -15,7 +15,7 @@ jobs:
     outputs:
       examples: ${{ steps.find.outputs.examples }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - id: find
         run: |
           examples=$(find . -maxdepth 2 -name docker-compose.yml -printf '%h\n' \
@@ -31,7 +31,7 @@ jobs:
       matrix:
         example: ${{ fromJson(needs.discover.outputs.examples) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Seed .env from template if present
         run: |
           if [ -f "${{ matrix.example }}/.env.template" ]; then
