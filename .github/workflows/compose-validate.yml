@@ -1,0 +1,40 @@
+name: Compose Validate
+
+# Fast pass: confirms every example's docker-compose.yml parses and
+# resolves (services, networks, volumes, env interpolation) without
+# pulling images or starting any containers.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      examples: ${{ steps.find.outputs.examples }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: find
+        run: |
+          examples=$(find . -maxdepth 2 -name docker-compose.yml -printf '%h\n' \
+            | sed 's|^\./||' | sort | jq -R -s -c 'split("\n")[:-1]')
+          echo "examples=$examples" >> "$GITHUB_OUTPUT"
+
+  validate:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        example: ${{ fromJson(needs.discover.outputs.examples) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Seed .env from template if present
+        run: |
+          if [ -f "${{ matrix.example }}/.env.template" ]; then
+            cp "${{ matrix.example }}/.env.template" "${{ matrix.example }}/.env"
+          fi
+      - name: Validate compose construction
+        run: docker compose -f "${{ matrix.example }}/docker-compose.yml" config --quiet

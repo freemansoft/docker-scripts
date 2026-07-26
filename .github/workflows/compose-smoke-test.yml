@@ -1,0 +1,47 @@
+name: Compose Smoke Test
+
+# Longer activity: actually brings each example's stack up and confirms
+# every service reaches "running"/healthy state, then tears it down.
+# Manual trigger only (workflow_dispatch) - not wired to push/pull_request,
+# since standard runners may be undersized for the heavier examples
+# (datastax, kafka-confluent) and image pulls make this slow.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      examples: ${{ steps.find.outputs.examples }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: find
+        run: |
+          examples=$(find . -maxdepth 2 -name docker-compose.yml -printf '%h\n' \
+            | sed 's|^\./||' | sort | jq -R -s -c 'split("\n")[:-1]')
+          echo "examples=$examples" >> "$GITHUB_OUTPUT"
+
+  smoke-test:
+    needs: discover
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        example: ${{ fromJson(needs.discover.outputs.examples) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Seed .env from template if present
+        run: |
+          if [ -f "${{ matrix.example }}/.env.template" ]; then
+            cp "${{ matrix.example }}/.env.template" "${{ matrix.example }}/.env"
+          fi
+      - name: Start stack and wait for services to be healthy/running
+        run: docker compose -f "${{ matrix.example }}/docker-compose.yml" up -d --wait --wait-timeout 120
+      - name: Show container status
+        if: always()
+        run: docker compose -f "${{ matrix.example }}/docker-compose.yml" ps -a
+      - name: Tear down
+        if: always()
+        run: docker compose -f "${{ matrix.example }}/docker-compose.yml" down -v
